@@ -1,0 +1,16 @@
+.env
+.env.local
+.DS_Store
+*.log
+__pycache__/
+node_modules/
+.claude/settings.local.json
+audits/
+
+# IDE — user-specific, not for repo
+.vscode/
+
+# Personal context — keep in private branch, never commit to public fork
+CLAUDE.local.md
+my-aios-stack-*.html
+references/my-aios-stack-*.html

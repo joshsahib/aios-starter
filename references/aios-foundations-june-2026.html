@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIOS Foundations Reference — June 2026</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f8f8f6;
+  --bg3: #f0efe9;
+  --text: #1a1a18;
+  --text2: #444440;
+  --text3: #72706a;
+  --border: rgba(0,0,0,0.12);
+  --border2: rgba(0,0,0,0.08);
+  --accent: #2a5fc4;
+  --accent-bg: #eef3fc;
+  --note-bg: #fef9ec;
+  --note-border: #e0bc44;
+  --warn-bg: #fef2f2;
+  --warn-border: #dc6060;
+  --ok-bg: #f0f9ec;
+  --ok-border: #5aaa3a;
+  --code-bg: #f3f2ec;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #18181a;
+    --bg2: #222224;
+    --bg3: #2a2a2c;
+    --text: #e8e8e4;
+    --text2: #b0b0aa;
+    --text3: #787874;
+    --border: rgba(255,255,255,0.12);
+    --border2: rgba(255,255,255,0.07);
+    --accent: #6b9de8;
+    --accent-bg: #1a2540;
+    --note-bg: #2a2410;
+    --note-border: #c09a20;
+    --warn-bg: #2a1414;
+    --warn-border: #c04040;
+    --ok-bg: #142210;
+    --ok-border: #3a8a20;
+    --code-bg: #2a2a28;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+nav {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  max-height: 38vh;
+  overflow-y: auto;
+  z-index: 100;
+  margin-bottom: 32px;
+}
+nav h2 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+  border: none;
+  padding: 0;
+  margin-top: 0;
+}
+nav ul { list-style: none; }
+nav ul li { line-height: 1.5; }
+nav ul li a { font-size: 13px; color: var(--text2); }
+nav ul li ul { padding-left: 14px; }
+nav ul li ul li a { font-size: 12px; color: var(--text3); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 32px 0 6px;
+  color: var(--text);
+}
+h2 {
+  font-size: 19px;
+  font-weight: 600;
+  margin-top: 48px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border2);
+  color: var(--text);
+  scroll-margin-top: 60px;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+p { margin-bottom: 12px; color: var(--text2); }
+ul, ol { padding-left: 20px; margin-bottom: 12px; color: var(--text2); }
+li { margin-bottom: 4px; }
+li + li { margin-top: 2px; }
+code {
+  font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+  font-size: 12.5px;
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text);
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.meta {
+  font-size: 13px;
+  color: var(--text3);
+  margin-bottom: 24px;
+}
+.callout {
+  border-left: 3px solid;
+  padding: 10px 14px;
+  margin: 14px 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+}
+.callout p { margin-bottom: 0; font-size: 14px; }
+.callout.note { background: var(--note-bg); border-color: var(--note-border); color: var(--text2); }
+.callout.warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--text2); }
+.callout.ok { background: var(--ok-bg); border-color: var(--ok-border); color: var(--text2); }
+.callout.info { background: var(--accent-bg); border-color: var(--accent); color: var(--text2); }
+.confidence {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.confidence.high { background: var(--ok-bg); color: var(--ok-border); }
+.confidence.medium { background: var(--note-bg); color: var(--note-border); }
+.confidence.contested { background: var(--warn-bg); color: var(--warn-border); }
+.cite {
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--text3);
+}
+.cite a { color: var(--text3); text-decoration: underline; text-decoration-style: dotted; }
+.decision-table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 13.5px; }
+.decision-table th {
+  background: var(--bg3);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+  color: var(--text2);
+}
+.decision-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border2);
+  vertical-align: top;
+  color: var(--text2);
+}
+.decision-table tr:nth-child(even) td { background: var(--bg2); }
+.checklist { list-style: none; padding-left: 0; }
+.checklist li {
+  padding: 4px 0 4px 24px;
+  position: relative;
+  border-bottom: 1px solid var(--border2);
+  font-size: 14px;
+  color: var(--text2);
+}
+.checklist li::before {
+  content: "☐";
+  position: absolute;
+  left: 0;
+  color: var(--text3);
+}
+.checklist li:last-child { border-bottom: none; }
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+.sources-list { list-style: none; padding-left: 0; }
+.sources-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.sources-list li:last-child { border-bottom: none; }
+.src-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  background: var(--bg3);
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin-right: 5px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+hr { border: none; border-top: 1px solid var(--border2); margin: 40px 0; }
+.pill {
+  display: inline-block;
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin: 0 2px;
+}
+.pill.model { background: var(--accent-bg); color: var(--accent); }
+.pill.tool { background: var(--ok-bg); color: var(--ok-border); }
+.pill.warning { background: var(--warn-bg); color: var(--warn-border); }
+</style>
+</head>
+<body>
+
+<nav>
+<h2>Contents</h2>
+<ul>
+  <li><a href="#s1">1. Purpose &amp; How to Use</a></li>
+  <li><a href="#s2">2. Core Design Principles</a>
+    <ul>
+      <li><a href="#s2-1">Harness &amp; model independence</a></li>
+      <li><a href="#s2-2">Files over opaque memory</a></li>
+      <li><a href="#s2-3">Skills as the primary abstraction</a></li>
+      <li><a href="#s2-4">Progressive disclosure &amp; context economy</a></li>
+      <li><a href="#s2-5">Cadence &amp; retrospectives</a></li>
+    </ul>
+  </li>
+  <li><a href="#s3">3. Knowledge &amp; Context Architecture</a>
+    <ul>
+      <li><a href="#s3-1">Global persona (SOUL.md)</a></li>
+      <li><a href="#s3-2">Project context (CLAUDE.md / AGENTS.md)</a></li>
+      <li><a href="#s3-3">OKF &amp; structured catalogs</a></li>
+      <li><a href="#s3-4">Upstream synthesis (NotebookLM, Perplexity)</a></li>
+      <li><a href="#s3-5">Cross-machine sync</a></li>
+    </ul>
+  </li>
+  <li><a href="#s4">4. Capabilities Layer</a>
+    <ul>
+      <li><a href="#s4-1">Skills: structure &amp; authoring</a></li>
+      <li><a href="#s4-2">Skills vs MCP vs Hooks vs CLI: decision guide</a></li>
+      <li><a href="#s4-3">Printing Press &amp; agent-native CLIs</a></li>
+      <li><a href="#s4-4">Prompt caching</a></li>
+    </ul>
+  </li>
+  <li><a href="#s5">5. Multi-Harness &amp; Multi-Model Patterns</a></li>
+  <li><a href="#s6">6. Execution Workflows</a></li>
+  <li><a href="#s7">7. Token Efficiency</a></li>
+  <li><a href="#s8">8. Security &amp; Containment</a></li>
+  <li><a href="#s9">9. Evaluation &amp; Retrospectives</a></li>
+  <li><a href="#s10">10. How to Use This Reference with a Harness</a></li>
+  <li><a href="#quick">Quick Reference Checklist</a></li>
+  <li><a href="#sources">Source Appendix</a></li>
+</ul>
+</nav>
+
+<h1>AIOS Foundations Reference</h1>
+<p class="meta">June 2026 · Synthesized from 66 sources · Internal reference for building a personal AI Operating System</p>
+
+<div class="callout note">
+<p><strong>Intended use:</strong> Load this document into a capable harness (Claude, Codex, Hermes, Gemini, etc.) as context while designing an AIOS. It is a design-time reference, not a runtime config file. Do not prescribe specific directory layouts — treat examples as illustrative only. Best practices in this space evolve rapidly; this document reflects the state of knowledge as of June 2026.</p>
+</div>
+
+<hr>
+
+<!-- ======================================================= SECTION 1 -->
+<h2 id="s1">1. Purpose &amp; How to Use This Document</h2>
+
+<p>This reference synthesizes patterns from 66 curated sources: Anthropic engineering posts, Claude Code and Codex docs, Hermes Agent docs, LangSmith materials, open-source AIOS projects, NotebookLM and Perplexity guidance, YouTube walkthroughs by practitioners, and Reddit write-ups from experienced daily users. The goal is to surface stable design patterns, trade-offs, and vocabulary — not to prescribe a single blueprint.</p>
+
+<p>The most useful framing: an AIOS is a <strong>context supply chain</strong>. Durable files feed skills; skills call tools; tools produce artifacts; artifacts update files; later sessions consume the improved files. The choices you make about what lives where, and how it is loaded, matter more than any individual prompt.</p>
+
+<div class="callout info">
+<p><strong>Designed to be flexible across:</strong> harnesses (Claude Code, Codex/OpenCode, Hermes, Cursor, Gemini CLI, Qwen) · models (Sonnet, Opus, GPT, Gemini, DeepSeek, local via Ollama) · agents (single-agent, subagent teams, always-on Hermes) · machines (laptop, VPS, mobile via Dispatch or messaging bots)</p>
+</div>
+
+<h3>How to use this with a harness</h3>
+<ul>
+  <li>Ask for alternative architectures: <em>"Using this report, propose three AIOS designs with different token-cost trade-offs."</em></li>
+  <li>Extract a specific slice: <em>"Summarize only the security patterns relevant to MCP connectors."</em></li>
+  <li>Transform into actionable artifacts: <em>"Turn the checklist section into a skill file I can invoke at session start."</em></li>
+  <li>Co-design against an existing repo: <em>"Given my project structure and this report, suggest what should be a skill vs. what should be CLAUDE.md."</em></li>
+  <li>Explore trade-offs: <em>"Compare the Skills-first view (Simon Willison) with Anthropic's MCP-first framing."</em></li>
+</ul>
+
+<hr>
+
+<!-- ======================================================= SECTION 2 -->
+<h2 id="s2">2. Core Design Principles</h2>
+
+<h3 id="s2-1">2.1 Harness &amp; model independence</h3>
+<span class="confidence high">High consensus</span>
+
+<p>The most durable AIOS architectures treat <em>which harness</em> and <em>which model</em> as configuration, not architecture. This comes up repeatedly across AIS-OS, career-ops, Prompt Master, and the Claude-with-Codex cross-tool guides. <span class="cite"><a href="https://github.com/nateherkai/AIS-OS">AIS-OS</a> · <a href="https://github.com/santifer/career-ops">career-ops</a> · <a href="https://github.com/shakacode/claude-code-commands-skills-agents/blob/main/docs/claude-code-with-codex.md">Claude Code with Codex</a></span></p>
+
+<p>Career-ops is explicitly CLI-agnostic — the same mode files run on Claude Code, Codex, OpenCode, Gemini CLI, Qwen, and Copilot. Prompt Master supports 30+ tools via a single structured pipeline. The pattern: keep the knowledge layer (skills, context files, catalogs) in neutral locations; let each harness have only thin adapter config.</p>
+
+<div class="callout info">
+<p><strong>Implication:</strong> When you adopt a harness-specific feature (e.g., Claude Code hooks), put the behavioral logic in scripts or skills other tools could also invoke. Treat hook wiring as "glue," not core architecture.</p>
+</div>
+
+<h3 id="s2-2">2.2 Files over opaque memory</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Strong agreement across ICM, Hermes, OKF, career-ops, and community posts: long-lived knowledge belongs in plain files, not in proprietary chat memory. Markdown, YAML frontmatter, JSON, and well-named folder structures are interpretable, diffable, versionable, and portable. A personal AIOS is not a chat habit — it is a knowledge and workflow substrate that should survive switching models, terminals, or machines. <span class="cite"><a href="https://www.youtube.com/watch?v=Kf_c3p2XhmU">ICM Workshop video</a> · <a href="https://hermesagent.io/">Hermes Agent docs</a> · <a href="https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf">OKF repo</a></span></p>
+
+<div class="callout info">
+<p><strong>Implication:</strong> When there is a choice between "store this in a tool's internal memory" and "store this in a well-named file multiple tools can read," the file-based option is usually the better long-term building block.</p>
+</div>
+
+<h3 id="s2-3">2.3 Skills as the primary abstraction for reusable behavior</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Across Anthropic's Agent Skills docs, the open Agent Skills standard, Hermes skill guidance, Prompt Master, and the large skill-building PDF: procedures should be packaged as reusable skill units. A skill is an operational package — instructions, examples, sometimes scripts, sometimes references, and an explicit description of when to use it. <span class="cite"><a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Anthropic: Equipping agents with skills</a> · <a href="https://agentskills.io/">agentskills.io</a> · <a href="https://code.claude.com/docs/en/skills.md">Claude Code skills docs</a> · <a href="https://simonwillison.net/2025/Oct/16/claude-skills/">Simon Willison</a></span></p>
+
+<p>Simon Willison's widely cited post argues that markdown skills + code execution often give more leverage than complex protocol-level integrations: almost everything achievable with an MCP can be handled by a CLI tool, and a skill file avoids even that overhead for many workflows.</p>
+
+<div class="callout info">
+<p><strong>Implication:</strong> Skills are the right place for repeatable workflows, meta-workflows, checklists, evaluators, planning routines, and domain-specific procedures. If something feels like a reusable playbook, it probably belongs in a skill, not in CLAUDE.md or a system prompt.</p>
+</div>
+
+<h3 id="s2-4">2.4 Progressive disclosure &amp; context economy</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Success with serious agents comes less from writing "better prompts" and more from managing context shape — deciding what is always loaded, what is invoked on demand, what gets compacted, what gets summarized, and what becomes a subagent. This is context engineering, not prompt engineering. <span class="cite"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic: Effective context engineering</a> · <a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">HumanLayer: Writing a good CLAUDE.md</a></span></p>
+
+<p>The three-level disclosure pattern for skills:</p>
+<ol>
+  <li><strong>Metadata only:</strong> name + description loaded in system prompt so the agent knows what exists without loading everything.</li>
+  <li><strong>SKILL.md body:</strong> invoked only when relevant.</li>
+  <li><strong>Supporting files:</strong> templates, reference docs, scripts — loaded only when necessary within a skill.</li>
+</ol>
+
+<div class="callout info">
+<p><strong>Implication:</strong> Design your system so the agent always has a short map of what is available and can choose what to pull in, rather than starting every session fully loaded.</p>
+</div>
+
+<h3 id="s2-5">2.5 Cadence &amp; retrospectives</h3>
+<span class="confidence high">High consensus</span>
+
+<p>The Four Cs framework from ICM / the Hazel OS architecture video provides a useful organizing lens: <strong>Context</strong> (what the system knows), <strong>Connections</strong> (what it can access), <strong>Capabilities</strong> (what it can do), and <strong>Cadence</strong> (when and how often things run). The Cadence layer — daily/weekly retrospectives, session logs, recurring audits — turns ad hoc AI use into a compounding system. <span class="cite"><a href="https://www.youtube.com/watch?v=0WDkwMxj13s">NateHerk: I Turned Claude Opus Into My Entire AI OS</a> · <a href="https://github.com/nateherkai/AIS-OS">AIS-OS</a> · <a href="https://www.reddit.com/r/ClaudeAI/comments/1sn27yu/claude_code_workflow_tips_after_6_months_of_daily/">Reddit: Workflow tips after 6 months</a></span></p>
+
+<hr>
+
+<!-- ======================================================= SECTION 3 -->
+<h2 id="s3">3. Knowledge &amp; Context Architecture</h2>
+
+<h3 id="s3-1">3.1 Global persona: SOUL.md (or equivalent)</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Hermes documentation strongly recommends a small, stable global persona file. The recurring warning across sources: do not mix project-specific instructions into a global identity file — it makes the agent less stable as it crosses domains. The more stable and high-level the file, the more reusable it is across harnesses and projects. <span class="cite"><a href="https://hermesagent.io/">Hermes: Use SOUL.md</a> · <a href="https://www.youtube.com/watch?v=0WDkwMxj13s">NateHerk: AI OS video</a></span></p>
+
+<p>Typical content for a global persona file: communication style, decision heuristics, confirmation rules, caution triggers, and preferences about how the system should handle uncertainty. Not task workflows — those belong in skills.</p>
+
+<div class="callout note">
+<p><strong>A global identity file is only useful when it stays genuinely global.</strong> The moment it carries repo-specific or task-specific details, it stops acting as durable persona and starts becoming fragile context clutter.</p>
+</div>
+
+<h3 id="s3-2">3.2 Project context: CLAUDE.md / AGENTS.md</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Claude Code docs, HumanLayer blog, and the Andrej Karpathy CLAUDE.md example all converge: keep project context files short, stable, and high-signal. The best files describe conventions, architecture constraints, common commands, naming decisions, tests, and always/never rules that remain true across sessions. <span class="cite"><a href="https://code.claude.com/docs/en/features-overview.md">Claude Code: Extend Claude Code</a> · <a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">HumanLayer: Writing a good CLAUDE.md</a> · <a href="https://github.com/multica-ai/andrej-karpathy-skills">Karpathy CLAUDE.md example</a></span></p>
+
+<p>Several sources specifically warn against using CLAUDE.md as a dumping ground. Where more detail is needed, use supporting files: path-scoped rules in <code>.claude/rules/</code>, deeper architecture notes, skill folders, logs, or project metadata. That split keeps the always-loaded file small while preserving rich supporting context.</p>
+
+<div class="callout note">
+<p><strong>Short project context files are not under-documentation.</strong> They are a sign that detailed material has been moved into better-scoped artifacts. A useful heuristic from community posts: aim for under 150–200 lines. If it grows beyond that, extract to skills or supporting files.</p>
+</div>
+
+<p>For multi-harness setups, consider an <code>AGENTS.md</code> (used by Codex and OpenCode) alongside <code>CLAUDE.md</code>, or a single shared file that both tools can read. The shakacode guide covers this pattern in detail. <span class="cite"><a href="https://github.com/shakacode/claude-code-commands-skills-agents/blob/main/docs/claude-code-with-codex.md">Claude Code with Codex guide</a></span></p>
+
+<h3 id="s3-3">3.3 OKF &amp; structured knowledge catalogs</h3>
+<span class="confidence medium">Medium consensus</span>
+
+<p>The Open Knowledge Format represents knowledge items as markdown files with YAML frontmatter — kind, owner, tags, relations. This creates a middle ground between raw text file folders and complex retrieval databases. Agents can reason over both content and metadata; humans can still inspect and edit files directly. <span class="cite"><a href="https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf">OKF repo</a> · <a href="https://cloud.google.com/blog/">Google Cloud Blog: OKF post</a></span></p>
+
+<p>OKF thinking is useful even if you do not adopt the standard exactly. The key idea: represent important units (projects, notes, workflows, datasets, decisions, people, tools, references) as explicit documents with typed metadata and relationships, rather than leaving everything implicit in filenames.</p>
+
+<div class="callout info">
+<p><strong>Implication:</strong> Structured markdown catalogs can serve as the bridge between "messy but flexible" file systems and "structured but opaque" knowledge bases — readable by humans and agents alike.</p>
+</div>
+
+<h3 id="s3-4">3.4 Upstream synthesis: NotebookLM, Perplexity, and similar tools</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Research and synthesis tools (NotebookLM, Perplexity) are best used as upstream artifact generators, not as primary work environments. NotebookLM excels at grounded document compression — taking 40 scattered documents and producing smaller artifacts with citations, outlines, and transformed outputs. That intermediate layer reduces token load in the main harness. <span class="cite"><a href="https://www.digitalocean.com/resources/articles/what-is-notebooklm">DigitalOcean: What is NotebookLM</a> · <a href="https://blog.google/innovation-and-ai/products/notebooklm-beginner-tips/">Google: NotebookLM beginner tips</a> · <a href="https://www.youtube.com/watch?v=OdCmZvPdr4s">Futurepedia: NotebookLM Better Than 99%</a></span></p>
+
+<p>Harnesses such as Claude Code, Codex/OpenCode, Cursor, or Hermes are better suited for acting on repositories, filesystems, command lines, MCP-connected systems, and local workflows. The tools that gather and compress knowledge do not have to be the same tools that execute the work.</p>
+
+<div class="callout note">
+<p><strong>Limitation:</strong> As of 2026, NotebookLM uses closed RAG — you cannot bring your own model or arbitrary MCP tools. Files in Git or OKF catalogs remain canonical; NotebookLM is used for deep reading and synthesis on top of those sources.</p>
+</div>
+
+<h3 id="s3-5">3.5 Cross-machine sync</h3>
+<span class="confidence medium">Medium consensus</span>
+
+<p>For a markdown-heavy AIOS folder synced across Mac, iOS, and a VPS, two lightweight approaches dominate community practice:</p>
+
+<ul>
+  <li><strong>Git / GitHub:</strong> The most principled option for files that change — you get diffs, version history, and the ability to revert. Use GitHub Desktop or a simple commit script for low-friction operation. Private repos are free. This is especially valuable for skill files, CLAUDE.md, and config files where knowing <em>what changed and when</em> matters. <span class="cite"><a href="https://github.com/nateherkai/AIS-OS">AIS-OS</a></span></li>
+  <li><strong>Cloud storage (iCloud Drive, Google Drive, Dropbox):</strong> Simpler for less technical users and for files that are read more than written. iCloud Drive with Desktop &amp; Documents sync covers the Mac/iOS gap natively. For a markdown-heavy AIOS folder, the storage footprint stays small — typically under 1 GB even as the system matures.</li>
+</ul>
+
+<p>VPS-hosted agents (e.g., Hermes) are a separate concern: their skill files and memory can be backed up to GitHub and pulled down when needed, or synced via rsync/SCP on a schedule.</p>
+
+<div class="callout info">
+<p><strong>Practical pattern:</strong> Git for files that change and where history matters (skills, CLAUDE.md, project configs); cloud storage for static reference files, exports, and artifacts that are read frequently but rarely edited.</p>
+</div>
+
+<hr>
+
+<!-- ======================================================= SECTION 4 -->
+<h2 id="s4">4. Capabilities Layer</h2>
+
+<h3 id="s4-1">4.1 Skills: structure &amp; authoring</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Across Anthropic's docs, the open Agent Skills standard, Hermes, Prompt Master, and the Complete Guide PDF, a consistent skill structure emerges: <span class="cite"><a href="https://code.claude.com/docs/en/skills.md">Claude Code: Extend Claude with skills</a> · <a href="https://github.com/anthropics/skills">Anthropic skills repo</a> · <a href="https://agentskills.io/">agentskills.io</a></span></p>
+
+<pre>my-skill/
+  SKILL.md          ← YAML frontmatter + markdown instructions
+  reference.md      ← dense reference material (loaded on demand)
+  forms.md          ← templates (loaded on demand)
+  scripts/          ← executable scripts if needed</pre>
+
+<p>Key authoring principles from multiple sources:</p>
+<ul>
+  <li><strong>Description matters most:</strong> Be explicit and concise in <code>name</code>, <code>description</code>, and <code>when_to_use</code> — this is what the model sees when deciding whether to invoke the skill.</li>
+  <li><strong>Keep SKILL.md lean:</strong> Move dense reference material or rare branches into separate files. The main file should read as a clear procedure, not an encyclopedia.</li>
+  <li><strong>Dynamic context injection:</strong> Use <code>!command</code> blocks judiciously to inline fresh data (e.g., <code>git diff</code>, current date, PR info) before the model sees the skill body.</li>
+  <li><strong>Side-effect skills:</strong> For skills that write files, run shell commands, or make API calls, consider adding <code>disable-model-invocation: true</code> or equivalent to prevent accidental auto-activation.</li>
+  <li><strong>Grill Me pattern:</strong> A skill that relentlessly interviews the user about a plan before any action is taken — checkpointing each answer to a brainstorm file — is a high-value meta-skill applicable across projects and harnesses. <span class="cite">Grill Me SKILL.md (local reference)</span></li>
+</ul>
+
+<h3 id="s4-2">4.2 Decision guide: Skills vs MCP vs Hooks vs CLI</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Claude Code's "Extend Claude Code" doc provides a decision matrix comparing extension mechanisms. The rough roles: <span class="cite"><a href="https://code.claude.com/docs/en/features-overview.md">Claude Code: features overview</a> · <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Anthropic: Code execution with MCP</a> · <a href="https://code.claude.com/docs/en/hooks.md">Claude Code: Hooks reference</a> · <a href="https://simonwillison.net/2025/Oct/16/claude-skills/">Simon Willison</a></span></p>
+
+<table class="decision-table">
+<thead>
+<tr>
+  <th>Mechanism</th>
+  <th>Best for</th>
+  <th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Skills</strong> (markdown + optional scripts)</td>
+  <td>Reusable workflows, planning routines, checklists, evaluators, domain procedures</td>
+  <td>Skill files that grow too large; missing clear invocation descriptions</td>
+</tr>
+<tr>
+  <td><strong>CLAUDE.md / project context</strong></td>
+  <td>Stable always-loaded conventions, architecture constraints, always/never rules</td>
+  <td>Stuffing transient or workflow detail here; exceeding 150–200 lines</td>
+</tr>
+<tr>
+  <td><strong>MCP servers</strong></td>
+  <td>Controlled access to external systems: databases, APIs, calendars, file stores</td>
+  <td>Token bloat from loading many tool schemas; locally installed MCPs are more auditable than remote ones</td>
+</tr>
+<tr>
+  <td><strong>Agent-native CLIs (Printing Press)</strong></td>
+  <td>Heavy-use services where you want token-efficient, harness-neutral access</td>
+  <td>Initial setup time; best for stable APIs with known usage patterns</td>
+</tr>
+<tr>
+  <td><strong>Hooks</strong></td>
+  <td>Hard constraints, deterministic enforcement, automation that must not depend on model memory</td>
+  <td>Over-engineering early; should fire on lifecycle events, not encode workflow logic</td>
+</tr>
+<tr>
+  <td><strong>Subagents</strong></td>
+  <td>Deep work with large contexts (codebase analysis, log analysis) that would pollute main context</td>
+  <td>Communication overhead; useful when isolation matters more than speed</td>
+</tr>
+<tr>
+  <td><strong>Plugins</strong></td>
+  <td>Packaging and distributing collections of skills + hooks + MCPs</td>
+  <td>Premature packaging before the underlying components are stable</td>
+</tr>
+</tbody>
+</table>
+
+<div class="callout note">
+<p><strong>The Skills &gt; MCP argument:</strong> Simon Willison argues, and the community broadly supports, that markdown skills + code execution often give more practical leverage than complex MCP integrations. LLMs already know how to use CLIs via <code>--help</code>, which means you spend fewer tokens describing how to use them. A skill file adds another layer of leverage: no CLI needed at all for many procedures.</p>
+</div>
+
+<h3 id="s4-3">4.3 Printing Press &amp; agent-native CLIs</h3>
+<span class="confidence medium">Medium consensus — emerging pattern</span>
+
+<p>Printing Press generates token-efficient, agent-native CLIs from any API spec, website, or HAR file. The core argument: loading many MCP tool schemas into context is expensive and causes bloat. A purpose-built CLI with short, descriptive flag structures is interpretable from <code>--help</code> alone, reducing per-call token cost substantially. <span class="cite"><a href="https://printingpress.dev/">printingpress.dev</a> · <a href="https://www.youtube.com/watch?v=6cEQEba0i2A">NateHerk: Save Millions of Claude Tokens</a></span></p>
+
+<p>Practical considerations:</p>
+<ul>
+  <li>Printing Press also generates a local SQLite mirroring strategy — compound queries run in milliseconds instead of making multiple remote API round trips.</li>
+  <li>Generated CLIs can serve as a shared operational substrate across harnesses — the same CLI works in Claude Code, Codex, Hermes, or any terminal-based agent.</li>
+  <li>Best for APIs you interact with frequently and where the usage pattern is stable enough to warrant the upfront generation cost.</li>
+  <li>The recommended priority order: CLI first (token-efficient, cacheable, agent-native) → API second → MCP last.</li>
+</ul>
+
+<div class="callout info">
+<p><strong>Implication:</strong> For services you use heavily in your AIOS (notes app, calendar, CRM, project tracker), generating a Printing Press CLI is often more robust and token-efficient than multiple bespoke MCP tools. Evaluate per service based on usage frequency and API stability.</p>
+</div>
+
+<h3 id="s4-4">4.4 Prompt caching</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Prompt caching lets you cache stable portions of prompts and reuse them across API calls at a lower cost. The biggest wins come from architecture decisions — where knowledge lives and how it is loaded — not from wording tweaks alone. <span class="cite"><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">Claude: Prompt caching docs</a> · <a href="https://www.youtube.com/watch?v=6cEQEba0i2A">NateHerk: Prompt caching video</a> · <a href="https://www.walturn.com/insights/">Walturn: How Prompt Caching Elevates Claude Code Agents</a></span></p>
+
+<p>Good candidates for caching in an AIOS:</p>
+<ul>
+  <li>Skill intros and sub-instructions that rarely change</li>
+  <li>Evaluation rubrics (e.g., grill-me question sets, scoring matrices)</li>
+  <li>Project overview summaries derived from CLAUDE.md + OKF entries</li>
+  <li>Long system prompts that are identical across many calls</li>
+</ul>
+
+<p>Key constraints to know:</p>
+<ul>
+  <li><strong>20-block lookback limit:</strong> Caches scan backward a maximum of 20 blocks. If a long conversation pushes the static breakpoint deeper, the cache will miss.</li>
+  <li><strong>Model switch breaks cache:</strong> Toggling between Opus for planning and Sonnet for execution changes the request prefix entirely, forcing a full uncached re-read.</li>
+  <li>Caching breakpoints should be placed at the end of static prefixes — never on dynamic content that changes per call.</li>
+</ul>
+
+<hr>
+
+<!-- ======================================================= SECTION 5 -->
+<h2 id="s5">5. Multi-Harness &amp; Multi-Model Patterns</h2>
+
+<span class="confidence high">High consensus</span>
+
+<p>The most portable AIOS designs keep the durable parts harness-neutral. Durable parts: skills, project notes, catalogs, rubrics, runbooks, architecture docs, persona files, and generated artifacts. Thin per-harness layers: harness-specific settings, optional wrapper files, adapter prompts. <span class="cite"><a href="https://github.com/santifer/career-ops">career-ops</a> · <a href="https://www.youtube.com/watch?v=kB9iMD0EjT8">NateHerk: Claude Code Projects in Codex</a> · <a href="https://github.com/shakacode/claude-code-commands-skills-agents/blob/main/docs/claude-code-with-codex.md">Claude Code with Codex</a></span></p>
+
+<p>The goal is not perfect sameness across harnesses — it is not having to rebuild the whole system when switching interfaces.</p>
+
+<h3>Harness roles</h3>
+<ul>
+  <li><strong>Claude Code / Codex CLI / Gemini CLI:</strong> Interactive sessions, repo-level work, file operations, MCP connections. Strong for agentic coding and multi-step tasks with human oversight.</li>
+  <li><strong>Claude.ai / ChatGPT web:</strong> Strategy, planning, long-form thinking, document synthesis. Long context and good reasoning without needing local tool access.</li>
+  <li><strong>Hermes Agent (VPS):</strong> Persistent, always-on tasks — monitoring, notifications, scheduled runs, inbox triage, recurring audits. Better suited to background agency than interactive collaboration. <span class="cite"><a href="https://www.youtube.com/watch?v=gb5TlGw6Uks">NateHerk: Hermes Agent course</a> · <a href="https://hermesagent.io/">hermesagent.io</a></span></li>
+  <li><strong>Claude Cowork / Claude Dispatch:</strong> Computer use and mobile delegation to a running local session.</li>
+  <li><strong>NotebookLM / Perplexity:</strong> Upstream synthesis and research; artifact generators for downstream harnesses.</li>
+</ul>
+
+<h3>Multi-model within one workflow</h3>
+<p>Community posts and the NateHerk Claude-vs-Codex video suggest a practical pattern: use one model for planning (typically stronger reasoning — Opus, GPT-o series) and a different model for execution (faster, cheaper — Sonnet, Haiku, GPT-4o-mini). Consider using an adversarial model to critique the plan before execution. Note: switching models during a session breaks prompt cache.</p>
+
+<h3>Managing multiple projects for one person</h3>
+<p>The sources support a per-project CLAUDE.md plus a shared global layer. One practical pattern: a root AIOS directory with shared skills, shared persona file, and a <code>projects/</code> directory where each project has its own context files. The global layer loads everywhere; project context loads only when working in that project's directory. <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1thi6nh/100_tips_tricks_for_building_your_own_personal_ai/">Reddit: 100 Tips for Personal AI Agent</a></span></p>
+
+<hr>
+
+<!-- ======================================================= SECTION 6 -->
+<h2 id="s6">6. Execution Workflows</h2>
+
+<h3>6.1 Planning before coding</h3>
+<span class="confidence high">High consensus — especially from experienced practitioners</span>
+
+<p>Never allow the agent to write implementation code until it has generated a verified plan. The community is emphatic on this. Experienced developers recommend asking for "one step at a time" and using an adversarial dual-model approach: after the primary model generates a plan, ask a different model (or the same model in a fresh context) to critique it and catch hidden hallucinations before execution. <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1sn27yu/claude_code_workflow_tips_after_6_months_of_daily/">Reddit: Workflow tips after 6 months</a> · <a href="https://www.reddit.com/r/ClaudeAI/comments/1sv852q/claude_code_cheat_sheet_after_6_months_of_daily/">Reddit: Cheat sheet after 6 months</a></span></p>
+
+<p>The "Grill Me" skill pattern is the structured version of this: a skill that asks adversarial clarifying questions about a plan before any action is taken. Highly reusable across projects and harnesses.</p>
+
+<h3>6.2 Dev docs pattern</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Because sessions must be compacted or restarted to manage token costs, agents will suffer amnesia without external state. Before execution, generate local state documents: <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1oivjvm/claude_code_is_a_beast_tips_from_6_months_of/">Reddit: Claude Code is a Beast</a></span></p>
+<ul>
+  <li><code>[task]-plan.md</code> — high-level strategy</li>
+  <li><code>[task]-context.md</code> — key architectural decisions and files involved</li>
+  <li><code>[task]-tasks.md</code> — verifiable checklist</li>
+</ul>
+<p>Invoke a <code>/update-dev-docs</code> slash command or skill before compacting. In a new session, instruct the agent to read the dev docs and resume. The agent's session-level intelligence becomes durable because it is written to disk.</p>
+
+<h3>6.3 Test-driven development &amp; checkpointing</h3>
+<span class="confidence high">High consensus</span>
+
+<p>Write verifiable tests before implementation. Commit to Git the moment a test passes — this creates an immediate rollback point. Use a process manager like PM2 or similar so the agent can read real-time service logs when a test fails. <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1tj2i90/im_a_software_engineer_with_a_decade_of/">Reddit: Software engineer vibe coding rules</a> · <a href="https://www.reddit.com/r/ClaudeAI/comments/1oivjvm/claude_code_is_a_beast_tips_from_6_months_of/">Reddit: Claude Code is a Beast</a></span></p>
+
+<h3>6.4 Session retrospectives</h3>
+<span class="confidence high">High consensus</span>
+
+<p>At the end of every working session, invoke a <code>/retro</code> or <code>/close</code> skill. The agent scans its context, extracts decisions made, alternatives rejected, and assumptions that proved false, and appends them to a persistent <code>SESSION_LOG.md</code>. This translates ephemeral session tokens into durable institutional knowledge. <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1sn27yu/claude_code_workflow_tips_after_6_months_of_daily/">Reddit: Workflow tips after 6 months</a> · <a href="https://github.com/nateherkai/AIS-OS">AIS-OS /audit and /level-up skills</a></span></p>
+
+<h3>6.5 Progression levels</h3>
+<p>A widely-cited Reddit post describes five levels of Claude Code usage, from raw prompting to orchestrating multiple agents. The core insight: hitting limitations at each level forces methodological upgrades — better context files, then skills, then hooks, then subagents, then multi-agent orchestration. Recognizing which ceiling you've hit is useful for knowing what to invest in next. <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1s1ipep/the_5_levels_of_claude_code_and_how_to_know_when/">Reddit: 5 levels of Claude Code</a></span></p>
+
+<hr>
+
+<!-- ======================================================= SECTION 7 -->
+<h2 id="s7">7. Token Efficiency</h2>
+
+<span class="confidence high">High consensus — especially from community practitioners</span>
+
+<p>Token efficiency in the source set is not mainly about shorter prompts. It is about structuring context so the model repeatedly sees the minimum sufficient information. <span class="cite"><a href="https://www.reddit.com/r/ClaudeAI/comments/1tbwwel/claude_code_tips_for_terminal_users_from_a_senior/">Reddit: Terminal user tips</a> · <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Anthropic: Code execution with MCP</a> · <a href="https://printingpress.dev/">Printing Press</a></span></p>
+
+<h3>Key principles</h3>
+<ul>
+  <li><strong>Use <code>/btw</code> for side questions:</strong> In Claude Code, the <code>/btw</code> command lets you ask questions or add context without those exchanges becoming part of the main conversation thread — preventing token accumulation from clarifying questions.</li>
+  <li><strong>Compact before context fills:</strong> Don't wait until the context is full. Compact aggressively and use dev docs to preserve state.</li>
+  <li><strong>Code execution over direct tools:</strong> Instead of loading 50 MCP tool definitions into context, present MCP servers as code APIs. Instruct the agent to write a short script that interacts with the MCP endpoints and filters data locally before returning results. Anthropic's engineering post documents up to 98.7% token reduction for data-heavy tasks. <span class="cite"><a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Anthropic: Code execution with MCP</a></span></li>
+  <li><strong>CLIs over MCPs for high-frequency services:</strong> Generated CLIs (via Printing Press) consume roughly 35x fewer tokens than equivalent MCP server implementations for the same operations. For services called frequently in long sessions, this compounds significantly.</li>
+  <li><strong>Structure prompts for caching:</strong> Place stable content (skill intros, evaluation rubrics, project summaries) before dynamic content. Cache invalidates from the first changed token forward.</li>
+  <li><strong>Avoid model switching mid-session:</strong> Switching models breaks cache, forcing a full re-read of context history.</li>
+</ul>
+
+<h3>Tool design for token efficiency</h3>
+<ul>
+  <li><strong>Semantic identifiers:</strong> Agents hallucinate when forced to manipulate abstract UUIDs. Ensure MCP tools translate primary keys into semantic identifiers before returning them. <span class="cite"><a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Anthropic: Writing effective tools</a></span></li>
+  <li><strong>Namespacing:</strong> Prefix related tools logically so the model infers functional boundaries without needing to load full schema definitions.</li>
+  <li><strong>Truncation:</strong> Enforce strict truncation on tool returns. If an agent hits a pagination limit, the tool's error response should teach the agent how to apply specific search filters — not return an opaque traceback.</li>
+</ul>
+
+<hr>
+
+<!-- ======================================================= SECTION 8 -->
+<h2 id="s8">8. Security &amp; Containment</h2>
+
+<span class="confidence high">High consensus</span>
+
+<p>Anthropic's "How we contain Claude across products" is the most detailed real-world account of agent security patterns and failures in the source set. The practical lesson: environment design matters more than hopeful prompting. <span class="cite"><a href="https://www.anthropic.com/engineering/how-we-contain-claude">Anthropic: How we contain Claude</a> · <a href="https://hermesagent.io/">Hermes: Tips &amp; Best Practices</a></span></p>
+
+<h3>8.1 Environment containment</h3>
+<p>Agents should execute inside sealed environments (Docker containers, local VMs, Daytona) for tasks that access sensitive data. Apply OS-level sandboxes and limited mount paths — only mounting the project directory into a VM is an example of a containment approach that materially limits blast radius.</p>
+
+<h3>8.2 Egress control</h3>
+<p>Conventional domain allowlists can be insufficient. Allowing access to a trusted API domain can still enable a maliciously-prompted agent to exfiltrate local credentials via an API's file upload or logging mechanism. Treat allowed egress domains as capability grants, not just connectivity. Use proxies where feasible to enforce additional semantics (e.g., only allowing calls that carry a specific token).</p>
+
+<h3>8.3 Trust boundaries &amp; file parsing</h3>
+<p>Do not allow an agent harness to parse repository-level configuration files (e.g., <code>.claude/settings.json</code>) before the user has explicitly granted trust. An attacker can place a malicious hook inside a cloned repo — if the harness parses config at startup, the hook executes before the user is prompted. Show a trust dialog first.</p>
+
+<h3>8.4 Human-in-the-loop limitations</h3>
+<p>Relying on dialog boxes that ask "Allow this command?" has real failure modes. Users develop approval fatigue and blindly approve prompts. Non-technical users cannot reliably evaluate complex bash payloads from a compromised agent. For critical operations (financial transactions, file deletion, external sends), prefer hooks that enforce hard constraints over HITL approval prompts.</p>
+
+<div class="callout warn">
+<p><strong>Persistent memory hygiene:</strong> Anything written into persistent context (CLAUDE.md, SOUL.md, OKF catalogs, Hermes memory) can serve as a long-lived injection vector. Periodic audits of these files — manual or via a small model — can catch suspicious instructions before they propagate.</p>
+</div>
+
+<hr>
+
+<!-- ======================================================= SECTION 9 -->
+<h2 id="s9">9. Evaluation &amp; Retrospectives</h2>
+
+<span class="confidence medium">Medium consensus — well-established in enterprise; less common for individual AIOS</span>
+
+<p>Reliable agents are observed agents. Even for personal use, lightweight tracing and a handful of evaluators can dramatically improve reliability. The principle: if a workflow is important enough to automate, it is important enough to log, review, and occasionally test with fixed examples. <span class="cite"><a href="https://www.langchain.com/langsmith">LangSmith</a></span></p>
+
+<h3>Evaluation types</h3>
+<ul>
+  <li><strong>Capability evals:</strong> Can the agent perform a new, hard task? Run when adding a skill or changing a prompt.</li>
+  <li><strong>Regression evals:</strong> Did today's change break existing automations? Run before major updates.</li>
+  <li><strong>Outcome grading:</strong> Grade whether the agent achieved the goal, not whether it followed the expected path. If the agent schedules a meeting correctly without calling <code>check_availability</code> first, that is a pass. Creative paths should not be penalized.</li>
+</ul>
+
+<h3>Lightweight personal patterns</h3>
+<ul>
+  <li>Keep run logs and structured result summaries per important workflow.</li>
+  <li>Capture failure examples and note why they failed — these become the basis for future skill improvements.</li>
+  <li>Recurring retrospectives (via AIS-OS's <code>/audit</code> and <code>/level-up</code> skills, or equivalent) turn improvement into a cadenced habit rather than an ad hoc fix.</li>
+</ul>
+
+<hr>
+
+<!-- ======================================================= SECTION 10 -->
+<h2 id="s10">10. How to Use This Reference with a Harness</h2>
+
+<p>This document is a source, not a final design. When you bring it into a harness:</p>
+
+<ul>
+  <li>Ask for <strong>alternative architectures</strong>: "Using this report, propose three plausible AIOS designs — lightweight, medium, and heavy — with clear trade-offs for each. Don't pick one yet."</li>
+  <li>Ask for <strong>layer-specific synthesis</strong>: "Extract only the best practices about skills vs MCP vs hooks."</li>
+  <li>Ask for <strong>transformation into smaller artifacts</strong>: "Turn the security section into a checklist skill I can run against my setup."</li>
+  <li>Ask for <strong>adaptation to an existing repo</strong>: "Given this project and this report, suggest what should live in CLAUDE.md, what should become skills, and what should remain external notes."</li>
+  <li>Ask for <strong>long-horizon planning</strong>: "Use this report to design an incremental migration path from my current setup to a more durable AIOS."</li>
+  <li>Ask for <strong>contrasts</strong>: "Compare the Printing Press approach against MCP for accessing my notes app. What are the trade-offs for my usage pattern?"</li>
+</ul>
+
+<hr>
+
+<!-- ======================================================= QUICK REFERENCE -->
+<h2 id="quick">Quick Reference Checklist</h2>
+
+<p style="font-size:13px;color:var(--text3);margin-bottom:16px;">Use this to audit an AIOS environment. Items are starting points, not requirements — adapt to your context.</p>
+
+<h4>Architecture &amp; configuration</h4>
+<ul class="checklist">
+  <li>Global persona file (SOUL.md or equivalent) is stable, project-agnostic, and under 1–2 pages</li>
+  <li>Project context file (CLAUDE.md / AGENTS.md) is under ~150–200 lines, focused on stable conventions</li>
+  <li>Complex workflows are extracted into the skills directory, not embedded in CLAUDE.md</li>
+  <li>Skills have clear <code>name</code>, <code>description</code>, and <code>when_to_use</code> in frontmatter</li>
+  <li>Skills with side-effects are flagged to prevent accidental auto-invocation</li>
+  <li>OKF or equivalent metadata exists for each major project (project type, tags, relationships)</li>
+</ul>
+
+<h4>Token efficiency</h4>
+<ul class="checklist">
+  <li>High-frequency service APIs have Printing Press CLIs instead of or alongside full MCP servers</li>
+  <li>Prompt caching breakpoints are placed at end of static content, before dynamic content</li>
+  <li>Model is not switched mid-session unless cache reset is acceptable</li>
+  <li>MCP tool-heavy tasks are restructured as code execution where possible</li>
+  <li>Tool return values are truncated and paginated; errors include actionable guidance</li>
+</ul>
+
+<h4>Execution workflow</h4>
+<ul class="checklist">
+  <li>Tasks begin with planning (plan mode, planner subagent, or Grill Me skill) before any code is written</li>
+  <li>Dev docs ([task]-plan.md, [task]-context.md, [task]-tasks.md) are generated before long execution runs</li>
+  <li>Adversarial review (different model or different perspective) is applied to plans before execution</li>
+  <li>Tests are written before implementation where applicable</li>
+  <li>Code is committed to Git after each passing test</li>
+  <li>A /retro or /close skill is invoked before compaction, generating a SESSION_LOG.md entry</li>
+</ul>
+
+<h4>Cross-harness &amp; cross-machine</h4>
+<ul class="checklist">
+  <li>Skills and context files are in harness-neutral locations; harness config is thin adapter files</li>
+  <li>AIOS folder is synced via Git (for diffs and history) and/or cloud storage (for broad access)</li>
+  <li>VPS-hosted agents (e.g., Hermes) have their skills and memory backed up to a repo</li>
+  <li>AGENTS.md or equivalent shared context file exists for projects that span multiple CLI tools</li>
+</ul>
+
+<h4>Security</h4>
+<ul class="checklist">
+  <li>Execution environment is isolated (container, VM, limited mount path) for sensitive tasks</li>
+  <li>Egress is treated as a capability grant, not just connectivity</li>
+  <li>Untrusted repos show a trust dialog before any config hooks are parsed</li>
+  <li>Persistent files (CLAUDE.md, SOUL.md, memory) are periodically audited for injected instructions</li>
+  <li>Hard constraints (destructive operations, external sends) are enforced by hooks, not HITL dialogs</li>
+</ul>
+
+<h4>Evaluation &amp; cadence</h4>
+<ul class="checklist">
+  <li>Important workflows have at least one fixed test case that catches regressions</li>
+  <li>Session logs and failure examples are accumulated for future skill improvements</li>
+  <li>A recurring audit skill (e.g., /audit, /level-up) is scheduled or invoked periodically</li>
+</ul>
+
+<hr>
+
+<!-- ======================================================= SOURCES -->
+<h2 id="sources">Source Appendix</h2>
+<p style="font-size:13px;color:var(--text3);margin-bottom:16px;">66 sources synthesized in this reference. Specific URLs provided where confirmed. Generic domain URLs indicate the specific page was not publicly indexed at time of compilation.</p>
+
+<ol class="sources-list">
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=RLjaUES9P8A">100 Hours Testing Claude Code vs ChatGPT Codex (honest results)</a> — NateHerk</li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1thi6nh/100_tips_tricks_for_building_your_own_personal_ai/">100 Tips &amp; Tricks for Building Your Own Personal AI Agent</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Docs</span> <a href="https://support.google.com/notebooklm/">Add or discover new sources for your notebook</a> — NotebookLM Help</li>
+  <li><span class="src-tag">Docs</span> <a href="https://www.langchain.com/">Agent Evaluation Readiness Checklist</a> — LangChain/LangSmith</li>
+  <li><span class="src-tag">Docs</span> <a href="https://docs.anthropic.com/">Agent Skills — Claude API Docs</a> — Anthropic</li>
+  <li><span class="src-tag">Docs</span> <a href="https://agentskills.io/">Agent Skills Overview</a> — agentskills.io</li>
+  <li><span class="src-tag">Docs</span> <a href="https://code.claude.com/docs/en/agent-sdk/skills.md">Agent Skills in the SDK — Claude Code Docs</a> — Anthropic</li>
+  <li><span class="src-tag">Docs</span> <a href="https://platform.openai.com/docs/">Agent Skills — Codex / OpenAI Developers</a> — OpenAI</li>
+  <li><span class="src-tag">Local</span> Building Hazel Labs OS Architecture — Gemini chat transcript; no public URL</li>
+  <li><span class="src-tag">Web</span> <a href="https://career-ops.org/">Career-Ops: How I Built My Own AI Job Search Tool</a></li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1sv852q/claude_code_cheat_sheet_after_6_months_of_daily/">Claude Code cheat sheet after 6 months of daily use</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1oivjvm/claude_code_is_a_beast_tips_from_6_months_of/">Claude Code is a Beast – Tips from 6 Months of Hardcore Use</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1tbwwel/claude_code_tips_for_terminal_users_from_a_senior/">Claude Code tips for terminal users (from a senior dev)</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1sn27yu/claude_code_workflow_tips_after_6_months_of_daily/">Claude Code workflow tips after 6 months of daily use</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Blog</span> <a href="https://simonwillison.net/2025/Oct/16/claude-skills/">Claude Skills are awesome, maybe a bigger deal than MCP</a> — Simon Willison</li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Code execution with MCP: building more efficient AI agents</a> — Anthropic Engineering</li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1sx44bc/drop_your_best_claude_skills_in_here/">Drop your best Claude skills in here!</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a> — Anthropic Engineering</li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/engineering">Anthropic Engineering</a></li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills">Equipping agents for the real world with Agent Skills</a> — Anthropic Engineering</li>
+  <li><span class="src-tag">Docs</span> <a href="https://code.claude.com/docs/en/features-overview.md">Extend Claude Code — Claude Code Docs</a></li>
+  <li><span class="src-tag">Docs</span> <a href="https://code.claude.com/docs/en/skills.md">Extend Claude with skills — Claude Code Docs</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/anthropics/skills">anthropics/skills — Anthropic skills repo</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/bergside/typeui">bergside/typeui — TypeUI AI design skills</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/diet103/claude-code-infrastructure-showcase">diet103/claude-code-infrastructure-showcase</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/disler/claude-code-hooks-mastery">disler/claude-code-hooks-mastery</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/multica-ai/andrej-karpathy-skills">multica-ai/andrej-karpathy-skills — CLAUDE.md example</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/nateherkai/AIS-OS">nateherkai/AIS-OS — AIOS starter kit</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/nidhinjs/prompt-master">nidhinjs/prompt-master — Prompt Master skill</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/santifer/career-ops">santifer/career-ops — career-ops repo</a></li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=6cEQEba0i2A">Give Me 10 Mins and I'll Save You Millions of Claude Tokens</a> — NateHerk</li>
+  <li><span class="src-tag">Docs</span> <a href="https://hermesagent.io/">Hermes Agent Documentation</a></li>
+  <li><span class="src-tag">Blog</span> <a href="https://rostglukhov.com/">Hermes Agent Skill Authoring — SKILL.md Structure and Best Practices</a> — Rost Glukhov</li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=gb5TlGw6Uks">Hermes Agent: Zero to Personal AI Assistant (1 Hour Course)</a> — NateHerk</li>
+  <li><span class="src-tag">Docs</span> <a href="https://code.claude.com/docs/en/hooks.md">Hooks reference — Claude Code Docs</a></li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.walturn.com/insights/">How Prompt Caching Elevates Claude Code Agents</a> — Walturn</li>
+  <li><span class="src-tag">Blog</span> <a href="https://cloud.google.com/blog/">How the Open Knowledge Format can improve data sharing</a> — Google Cloud Blog</li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=OdCmZvPdr4s">How to Use NotebookLM Better than 99% of People</a> — Futurepedia</li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=kB9iMD0EjT8">How to Use Your Claude Code Projects in Codex in 5 Mins</a> — NateHerk</li>
+  <li><span class="src-tag">Blog</span> <a href="https://blog.google/innovation-and-ai/products/notebooklm-beginner-tips/">How to get started with Google's NotebookLM</a> — Google</li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/engineering/how-we-contain-claude">How we contain Claude across products</a> — Anthropic Engineering</li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=Kf_c3p2XhmU">I Replaced My Entire Agent Framework with Markdown Files | ICM Workshop</a> — ManojSaharanAI</li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=0WDkwMxj13s">I Turned Claude Opus 4.8 Into My Entire AI Operating System</a> — NateHerk</li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1tj2i90/im_a_software_engineer_with_a_decade_of/">I'm a software engineer with a decade of experience — vibe coding rules</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/news/model-context-protocol">Introducing the Model Context Protocol</a> — Anthropic</li>
+  <li><span class="src-tag">Docs</span> <a href="https://www.langchain.com/langsmith">LangSmith — LLM &amp; AI Agent Evals Platform</a></li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=3TdD8Qv5Tk8">Master 97% of Codex in 1 Hour (full course)</a> — NateHerk</li>
+  <li><span class="src-tag">YT</span> <a href="https://www.youtube.com/watch?v=35WuZxbAY68">Overwhelmed By AI? Just Copy My Tech Stack</a> — NateHerk</li>
+  <li><span class="src-tag">Tool</span> <a href="https://printingpress.dev/">Printing Press — agent-native CLI generator</a></li>
+  <li><span class="src-tag">Docs</span> <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching">Prompt caching — Claude API Docs</a></li>
+  <li><span class="src-tag">Docs</span> <a href="https://hermesagent.io/">Quickstart | Hermes Agent</a></li>
+  <li><span class="src-tag">Local</span> SKILL.md (Grill Me) — local markdown file; no public URL</li>
+  <li><span class="src-tag">Docs</span> <a href="https://docs.anthropic.com/">Skill authoring best practices — Claude API Docs</a></li>
+  <li><span class="src-tag">Reddit</span> <a href="https://www.reddit.com/r/ClaudeAI/comments/1s1ipep/the_5_levels_of_claude_code_and_how_to_know_when/">The 5 levels of Claude Code (and how to know when you've hit the ceiling)</a> — r/ClaudeAI</li>
+  <li><span class="src-tag">Local</span> The Complete Guide to Building Skill for Claude (PDF) — local reference; no public URL</li>
+  <li><span class="src-tag">Docs</span> <a href="https://hermesagent.io/">Tips &amp; Best Practices | Hermes Agent</a></li>
+  <li><span class="src-tag">Docs</span> <a href="https://hermesagent.io/">Use SOUL.md with Hermes | Hermes Agent</a></li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.digitalocean.com/resources/articles/what-is-notebooklm">What Is NotebookLM? Features and How to Use It in 2026</a> — DigitalOcean</li>
+  <li><span class="src-tag">Docs</span> <a href="https://modelcontextprotocol.io/">What is the Model Context Protocol?</a></li>
+  <li><span class="src-tag">Docs</span> <a href="https://hermesagent.io/">Working with Skills | Hermes Agent</a></li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.humanlayer.dev/blog/writing-a-good-claude-md">Writing a good CLAUDE.md</a> — HumanLayer</li>
+  <li><span class="src-tag">Blog</span> <a href="https://www.anthropic.com/engineering/writing-tools-for-agents">Writing effective tools for AI agents — using AI agents</a> — Anthropic Engineering</li>
+  <li><span class="src-tag">Web</span> <a href="https://career-ops.org/">career-ops — AI-powered job search command center</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/shakacode/claude-code-commands-skills-agents/blob/main/docs/claude-code-with-codex.md">claude-code-commands-skills-agents / claude-code-with-codex.md</a> — shakacode</li>
+  <li><span class="src-tag">Docs</span> <a href="https://code.claude.com/docs/llms.txt">Claude Code llms.txt — official docs directory</a></li>
+  <li><span class="src-tag">GitHub</span> <a href="https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf">knowledge-catalog / OKF</a> — Google Cloud Platform</li>
+</ol>
+
+<p style="font-size:12px;color:var(--text3);margin-top:32px;padding-top:16px;border-top:1px solid var(--border2);">Compiled June 2026 · 66 sources · For internal AIOS design use · Best practices evolve; verify current docs before implementation</p>
+
+</body>
+</html>
