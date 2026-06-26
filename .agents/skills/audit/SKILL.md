@@ -34,8 +34,8 @@ The audit looks for **patterns and intent**, not exact paths. File names vary. U
 **Operating manual:** `CLAUDE.md` (root), bucket-level `[bucket]/CLAUDE.md`, `CLAUDE.local.md` (gitignored).
 **Cross-harness parity:** `AGENTS.md` symlinks at root and bucket level (should resolve to `CLAUDE.md`).
 **Global persona:** `SOUL.md` at root — exists and has placeholder text replaced vs. still template.
-**Session continuity:** `SESSION_LOG.md` at root — exists and has dated entries vs. empty/missing.
-**Memory:** `MEMORY.md` (root), `~/.claude/projects/<id>/memory/MEMORY.md`, or `memory/` folder.
+**Session continuity:** `journal.md` at root — exists and has dated entries vs. empty/missing.
+**Behavioral corrections:** `learnings/` folder at root. **Harness auto-memory:** `MEMORY.md` (root) or `~/.claude/projects/<id>/memory/MEMORY.md`.
 **Skills:** `.agents/skills/*/SKILL.md` and `.claude/skills/*/SKILL.md` (via symlink) — count + frontmatter.
 **Agents:** `.agents/agents/*.md` or `.claude/agents/*.md` — count + frontmatter.
 
@@ -47,14 +47,14 @@ The audit looks for **patterns and intent**, not exact paths. File names vary. U
 
 **Connections registry:** `connections.md` (anywhere).
 **Reference guides:** `references/{tool}-api.md`, `references/*-reference.md`, or equivalent.
-**Decisions:** `decisions/log.md`, `decisions.md`, or any append-only decisions file.
+**Decisions:** `decisions.md` or any append-only decisions file.
 **References / SOPs:** `references/`, `docs/`, `sops/` folders.
 **Templates:** `templates/`, `.claude/templates/`.
 **Hooks / scheduled jobs:** `.claude/settings.json` hooks key, or skill names matching `morning-*`, `weekly-*`, `daily-*`, `monthly-*`, `standup`.
 
 **Bucket structure:** Check which bucket directories exist (`personal-family/`, `day-job/`, `business-hobby/`) and whether each has:
 - `context/` subfolder with content
-- `brainstorms/` subfolder
+- `threads/` subfolder
 - `AGENTS.md` symlink
 
 Don't penalize for non-canonical names if equivalent intent is captured elsewhere.
@@ -69,9 +69,9 @@ Don't penalize for non-canonical names if equivalent intent is captured elsewher
 | SOUL.md exists and is filled (not all placeholders) | 4 | Read SOUL.md — check for `[bracketed]` content; filled = ≤2 brackets remain |
 | Identity / role / voice captured | 4 | CLAUDE.md mentions who the user is + domain/bucket structure, OR `.claude/rules/*.md` exists |
 | Bucket-level context populated | 4 | At least one bucket directory has content in `context/` subfolder |
-| Persistent memory exists with multiple entries | 5 | MEMORY.md exists with >3 entries, OR `memory/` has >3 files |
+| Persistent behavioral corrections captured | 5 | `learnings/` has >3 files, OR `MEMORY.md` / `~/.claude/projects/<id>/memory/MEMORY.md` has >3 entries |
 | Reference docs exist | 2 | `references/`, `docs/`, or `sops/` has ≥1 file |
-| Decisions captured | 2 | `decisions/log.md` or equivalent has ≥1 entry |
+| Decisions captured | 2 | `decisions.md` or equivalent has ≥1 entry |
 
 #### Connections (25 pts) — domain-aware, mechanism-agnostic
 
@@ -112,8 +112,8 @@ A "reachable" connection counts via ANY mechanism: MCP, script, export pipeline,
 | Criterion | Points | How to detect |
 |---|---|---|
 | 1+ recurring/scheduled trigger | 8 | `.claude/settings.json` hooks, OR skill name matches `morning-*` / `daily-*` / `weekly-*` / `monthly-*` / `standup` |
-| Recent activity / usage signal | 8 | Files in `.agents/skills/` modified within 30 days, OR `decisions/log.md` has entry within 30 days |
-| SESSION_LOG.md has entries | 5 | `SESSION_LOG.md` exists and has at least one dated entry (indicates active cross-session use) |
+| Recent activity / usage signal | 8 | Files in `.agents/skills/` modified within 30 days, OR `decisions.md` has entry within 30 days |
+| journal.md has entries | 5 | `journal.md` exists and has at least one dated entry (indicates active cross-session use) |
 | Templates folder populated | 4 | `templates/` or `.claude/templates/` has ≥1 file |
 
 ### Step 3: Identify top 3 gaps by leverage
@@ -129,14 +129,14 @@ For each criterion that lost points: leverage = (points lost) × (impact multipl
 - No recurring trigger: **2x** (no Cadence = no autonomy)
 - All connections read-only: **2x** (viewer, not an OS)
 - Bucket context empty: **2x** (AIOS doesn't know what matters in any specific domain)
-- No SESSION_LOG.md entries: **1.5x** (no session continuity)
+- No journal.md entries: **1.5x** (no session continuity)
 - 0 reference guides for connected tools: **1.5x** (every future skill re-researches the same APIs)
 - No decisions log: **1.5x**
 - All others: **1x**
 
 Sort gaps by leverage descending. Take top 3. For each, write a one-line concrete next step:
 - **Need a new skill?** Recommend `skill-creator` (Anthropic) or `skill-builder` (if local), or "write SKILL.md at `.agents/skills/<name>/SKILL.md` with YAML frontmatter."
-- **Need to log a decision?** "Append to `decisions/log.md`."
+- **Need to log a decision?** "Append to `decisions.md`."
 - **Need to reach a tier-1 domain?** Prefer API+script (write `scripts/{tool}_api.py` + save `references/{tool}-api.md`). Recommend `claude mcp add` only if no API path exists.
 - **Connected tool missing a reference guide?** "Research the API once, save endpoints + auth + common queries to `references/{tool}-api.md`."
 - **Need a recurring trigger?** "Add a hook to `.claude/settings.json`, or write a skill named `daily-*` you run each morning."

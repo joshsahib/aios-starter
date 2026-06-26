@@ -1,6 +1,6 @@
 ---
 name: grill-with-context
-description: Deep-interview the user about any plan, design, or decision while actively building shared vocabulary and documenting non-obvious decisions. Reads existing context first, maps the session, then works through grouped batches of 1-5 related decisions per turn — each with options and a recommendation. Writes session capture to brainstorms/, appends Decision Records to decisions/log.md. Use when stress-testing a plan, extracting thinking into a lasting doc, or when the user says "grill me".
+description: Deep-interview the user about any plan, design, or decision while actively building shared vocabulary and documenting non-obvious decisions. Reads existing context first, maps the session, then works through grouped batches of 1-5 related decisions per turn — each with options and a recommendation. Writes session capture to threads/, appends Decision Records to decisions.md. Use when stress-testing a plan, extracting thinking into a lasting doc, or when the user says "grill me".
 ---
 
 # Grill With Context
@@ -8,8 +8,8 @@ description: Deep-interview the user about any plan, design, or decision while a
 Interview the user about a topic until you reach shared understanding — grouping related decisions into efficient batches, actively refining shared language, and capturing what's decided so it survives context resets.
 
 **Two outputs, two destinations:**
-- Session capture (batched Q&A log, vocabulary, open flags) → `brainstorms/`
-- Decision Records → `decisions/log.md` (appended after each batch, not deferred to the end)
+- Session capture (batched Q&A log, vocabulary, open flags) → `threads/`
+- Decision Records → `decisions.md` (appended after each batch, not deferred to the end)
 
 Your role is not to confirm — it is to **stress-test**. Surface risks. Challenge assumptions. If the direction looks wrong, say so. Presenting options with a recommendation is an efficiency tool, not an endorsement; argue against your own recommendation if there's a better path.
 
@@ -21,19 +21,19 @@ Your role is not to confirm — it is to **stress-test**. Surface risks. Challen
 
 2. **Load the shared vocabulary.** If a `context/` folder exists, read any glossary or domain files. You'll challenge user language against these during the session and propose updates at the end.
 
-3. **Locate `decisions/log.md`.** Find it at root or nearest parent. Read recent entries to avoid relitigating settled decisions. Note its path — you'll append to it mid-session.
+3. **Locate `decisions.md`.** Find it at root or nearest parent. Read recent entries to avoid relitigating settled decisions. Note its path — you'll append to it mid-session.
 
-4. **Create the session capture file** at `brainstorms/{YYYY-MM-DD}-{topic-slug}.md` relative to the current working directory. Get today's date with `date +%F`.
+4. **Create the session capture file** at `threads/{YYYY-MM-DD}-{topic-slug}.md` relative to the current working directory. Get today's date with `date +%F`.
 
-5. **Initialize the capture file** with: title, date, goal, and empty sections for Shared Vocabulary, Q&A Log, and Open Flags. Decision Records go to `decisions/log.md`, not here.
+5. **Initialize the capture file** with: title, date, goal, and empty sections for Shared Vocabulary, Q&A Log, and Open Flags. Decision Records go to `decisions.md`, not here.
 
 6. **Map the session.** Before asking anything, identify the major decision areas and rough batch count. Present this briefly to the user — one line per area, total batch estimate. This lets them redirect if something is already settled or out of scope.
 
-7. **Tell the user where you're saving** (capture file + decisions/log.md) in one line. Then begin Batch 1.
+7. **Tell the user where you're saving** (capture file + decisions.md) in one line. Then begin Batch 1.
 
 **Session map format:**
 ```
-Saving to: brainstorms/{date}-{slug}.md · decisions/log.md
+Saving to: threads/{date}-{slug}.md · decisions.md
 
 Session map — {topic}
 ~{N} batches covering:
@@ -95,7 +95,7 @@ After the user responds to a batch — before presenting the next one:
 
 1. Append a structured entry per decision to the capture file (see structure below).
 2. Update the Shared Vocabulary section for any new or refined terms.
-3. Append qualifying Decision Records to `decisions/log.md` now — not at session end.
+3. Append qualifying Decision Records to `decisions.md` now — not at session end.
 4. Reconcile any intra-batch dependencies (if answer to #1 changes #3, update the captured entry).
 5. Then present the next batch.
 
@@ -110,7 +110,7 @@ Record a decision only when it is:
 - **Surprising without context** — a future reader would ask "why?"
 - **The product of real trade-offs** — not the obvious choice
 
-**Format — append to `decisions/log.md`:**
+**Format — append to `decisions.md`:**
 
 ```markdown
 ## YYYY-MM-DD — Short title
@@ -139,7 +139,7 @@ Treat imprecise language as a problem to solve, not a note to log.
 ## Capture file structure
 
 ```markdown
-# {Topic}: Brainstorm / Discovery Notes
+# {Topic}: Thread Capture / Discovery Notes
 Date: {date} · Goal: {one line}
 Decisions log: {path} (appended directly — not duplicated here)
 
@@ -174,6 +174,6 @@ Decisions log: {path} (appended directly — not duplicated here)
 ## At the end
 
 1. Read the capture file for contradictions, gaps, and decisions that depend on open flags. Reconcile what you can.
-2. Confirm all qualifying Decision Records were written to `decisions/log.md`.
+2. Confirm all qualifying Decision Records were written to `decisions.md`.
 3. Offer to update the bucket's `context/` files if meaningful vocabulary was established.
 4. Give a short recap: batches covered, flags open, vocabulary added, decisions logged, suggested next step.
