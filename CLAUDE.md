@@ -10,22 +10,28 @@ Claude Code auto-loads CLAUDE.md from the working directory plus all parent dire
 
 ```
 AIOS/
-├── CLAUDE.md (this file) · AGENTS.md → CLAUDE.md
+├── CLAUDE.md (this file) · AGENTS.md → CLAUDE.md   ← root operating manual, always loaded
 ├── SOUL.md               ← stable global persona; read at session start
-├── SESSION_LOG.md        ← running retro log
-├── decisions/
-│   └── log.md            ← append-only record of what was decided and why
+├── HANDBOOK.md           ← how the system works: folders, conventions, workflows, skills
+├── ROADMAP.md            ← what to add as the system grows, and when
+├── journal.md            ← session diary; cross-bucket summary per session
+├── decisions.md          ← append-only record of what was decided and why
+├── connections.md        ← registry of every tool/MCP/CLI the AIOS can reach
+├── aios-intake.md        ← source of truth for onboarding
 ├── .agents/skills/       ← canonical skills location (edit here)
 ├── .claude/skills → ../.agents/skills
-├── references/           ← static reference docs
-├── context/              ← cross-bucket: voice, preferences, shared vocabulary
-├── brainstorms/          ← cross-bucket scratch
-├── personal-family/      ← AGENTS.md · brainstorms/ · context/ [CLAUDE.md when needed]
-├── day-job/              ← AGENTS.md · brainstorms/ · context/ [CLAUDE.md when needed]
-└── business-hobby/       ← AGENTS.md · brainstorms/ · context/ [CLAUDE.md when needed]
+├── context/              ← cross-bucket static facts: voice, preferences, shared vocabulary
+├── threads/              ← cross-bucket topic captures (one file per topic)
+├── artifacts/            ← cross-bucket outputs the system made
+├── references/           ← cross-bucket inputs brought in from outside
+├── learnings/            ← persistent behavioral corrections (root-level only)
+├── archives/             ← retired content (root-level only)
+├── personal-family/      ← context/ threads/ workstreams/ artifacts/ references/ · journal.md · decisions.md [CLAUDE.md + AGENTS.md when needed]
+├── day-job/              ← (same bucket layout)
+└── business-hobby/       ← (same bucket layout)
 ```
 
-**Three buckets, not one.** Most personal AIOS assume a single business-operator context. This structure recognizes that life runs in parallel domains — personal and family life, employment, and independent projects or ventures. Each bucket has its own `brainstorms/` and `context/` subfolder. A bucket `CLAUDE.md` is created only when needed — see below. The root stays lean and cross-cutting.
+**Three buckets, not one.** Most personal AIOS assume a single business-operator context. This structure recognizes that life runs in parallel domains — personal and family life, employment, and independent projects or ventures. Each bucket mirrors the root folder set scoped to one domain — `context/`, `threads/`, `workstreams/`, `artifacts/`, `references/` — plus its own `journal.md` and `decisions.md`. A bucket `CLAUDE.md` is created only when needed — see below. The root stays lean and cross-cutting.
 
 **Root `context/` holds cross-bucket shared material** — voice samples, global preferences, cross-domain vocabulary. **Bucket `context/` holds domain-specific docs** — priorities, role context, domain knowledge. Bucket context files load on demand via @include or explicit instruction — never automatic.
 
@@ -58,7 +64,7 @@ Context loads hierarchically — working directory up to root. Pulling context a
 - Read `SOUL.md` at session start if not already loaded
 - Check `.agents/skills/` for a relevant skill before building a custom workflow
 - Propose a plan and confirm before modifying any file
-- Checkpoint work to disk frequently; append a brief entry to `SESSION_LOG.md` before ending a session
+- Checkpoint work to disk frequently; append a brief entry to `journal.md` before ending a session (the `retro` skill does this)
 - Never hardcode secrets or credentials in any file
 
 ## Never
@@ -76,17 +82,19 @@ Skills live in `.agents/skills/`. Read a skill's `name` and `description` frontm
 
 | Skill | Invoke when |
 |-------|------------|
-| `grill-with-context` | Before any significant plan, design, or decision — adversarial pre-flight, checkpoints to `brainstorms/`, appends decisions to `decisions/log.md` |
+| `grill-with-context` | Before any significant plan, design, or decision — adversarial pre-flight, checkpoints to `threads/`, appends decisions to `decisions.md` |
 | `onboard` | First session in a new bucket or after major structure changes |
 | `audit` | Periodic health check — context files, skills, MCP connections |
 | `level-up` | Surface and ship one new automation using the Three Ms interview — run weekly |
+
+Full skill inventory (incl. `retro`, `handoff`, `skill-creator`, `docx`, `pdf`, `pptx`) is in `HANDBOOK.md`.
 
 ---
 
 ## Session patterns
 
 **New task:** Run `grill-with-context` → generate supporting docs if multi-step → execute → document key decisions before ending
-**Resuming:** Read `SESSION_LOG.md` and relevant context/ files → resume
+**Resuming:** Read `journal.md` and relevant context/ files → resume
 **Cross-bucket:** Start at AIOS root; explicitly pull bucket context via `@include` or skill
 
 ---

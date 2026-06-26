@@ -79,9 +79,9 @@ Claude Code loads context hierarchically: working from the bucket folder loads t
 
 ---
 
-## What ships — 4 skills
+## What ships — skills
 
-The kit is intentionally lean. Skills here are ideation prompts and thinking tools, not heavy automations. You hack on top of the structure.
+The kit ships four recurring AIOS skills — ideation prompts and thinking tools, not heavy automations — plus a set of bundled utility skills. You hack on top of the structure.
 
 | Skill | Type | When to run |
 |---|---|---|
@@ -89,6 +89,8 @@ The kit is intentionally lean. Skills here are ideation prompts and thinking too
 | `/grill-with-context` | Adversarial pre-flight | Before any significant plan or decision. Stress-tests assumptions before you commit. |
 | `/audit` | Recurring thinking skill | Day 7, then weekly. Four-Cs gap report. Read-only. Watch the score climb. |
 | `/level-up` | Recurring thinking skill | Day 14, then weekly. Three Ms interview. One run = one shipped artifact. |
+
+**Bundled utility skills:** `retro` and `handoff` (session continuity), `skill-creator` (build/optimize skills), and `docx` / `pdf` / `pptx` (document generation).
 
 `/audit` asks *"is the AIOS built right?"* (form). `/level-up` asks *"what leverage am I missing?"* (function). They work in series — fix structure first, then capability planning becomes meaningful.
 
@@ -98,7 +100,7 @@ The kit is intentionally lean. Skills here are ideation prompts and thinking too
 
 1. **Clone the repo** to a working folder on your machine.
 2. **Open it in Claude Code** and run `/onboard`. Answer the questions honestly. Voice samples must be pasted, not described. Takes ~15 minutes. Day-1 file set drops at the end.
-3. **Use it for a week.** Bring real questions. Make real decisions. Log them via `/decision` (or just append to `decisions/log.md`).
+3. **Use it for a week.** Bring real questions. Make real decisions. Log them by appending to `decisions.md`.
 4. **Day 7:** run `/audit`. Read the Four-Cs gap report. Pick one gap to close.
 5. **Day 14:** run `/level-up`. The Three Ms interview surfaces one automation worth building. Build it.
 6. **Week 3+:** weekly `/level-up` ritual. One shipped artifact per week.
@@ -113,40 +115,44 @@ AIOS/
 ├── CLAUDE.md                        ← Root operating manual (loaded in every session)
 ├── AGENTS.md → CLAUDE.md            ← Symlink for cross-harness parity
 ├── SOUL.md                          ← Global persona (fill once, loaded always)
-├── SESSION_LOG.md                   ← Running retro log for cross-session continuity
-├── EXPANSIONS.md                    ← What to add as you grow
+├── HANDBOOK.md                      ← How the system works: folders, conventions, workflows, skills
+├── ROADMAP.md                       ← What to add as you grow, and when
 ├── LICENSE
 ├── .gitignore
-├── aios-intake.md                   ← Source-of-truth for /onboard. Edit + re-run any time.
+├── journal.md                       ← Session diary; cross-bucket summary per session
+├── decisions.md                     ← Append-only record of what was decided and why
 ├── connections.md                   ← Registry of every system your AIOS can reach
-├── context/                         ← Cross-bucket: voice samples, global preferences
-├── references/
+├── aios-intake.md                   ← Source-of-truth for /onboard. Edit + re-run any time.
+├── context/                         ← Cross-bucket static facts: voice samples, global preferences
+├── threads/                         ← Cross-bucket topic captures (one file per topic)
+├── artifacts/                       ← Cross-bucket outputs the system made
+├── references/                      ← Inputs brought in from outside
 │   └── 3ms-framework.md             ← The operator brain (Three Ms framework)
-├── decisions/
-│   └── log.md                       ← Append-only record of what was decided and why
-├── brainstorms/                     ← Cross-bucket scratch space
-├── archives/                        ← Old files. Don't delete — move here.
+├── learnings/                       ← Persistent behavioral corrections (root-level only)
+├── archives/                        ← Retired content. Move here; don't delete.
 ├── personal-family/                 ← Life admin, finances, health, relationships
-│   ├── AGENTS.md → CLAUDE.md
-│   ├── brainstorms/
-│   └── context/
+│   ├── context/  threads/  workstreams/  artifacts/  references/
+│   └── journal.md  decisions.md     ← (+ CLAUDE.md & AGENTS.md only when needed)
 ├── day-job/                         ← Primary employment
-│   ├── AGENTS.md → CLAUDE.md
-│   ├── brainstorms/
-│   └── context/
+│   ├── context/  threads/  workstreams/  artifacts/  references/
+│   └── journal.md  decisions.md
 ├── business-hobby/                  ← Independent ventures, side projects
-│   ├── AGENTS.md → CLAUDE.md
-│   ├── brainstorms/
-│   └── context/
+│   ├── context/  threads/  workstreams/  artifacts/  references/
+│   └── journal.md  decisions.md
 └── .agents/
-    └── skills/                      ← (.claude/skills → .agents/skills symlink)
-        ├── onboard/SKILL.md
-        ├── audit/SKILL.md
-        ├── level-up/SKILL.md
-        └── grill-with-context/SKILL.md
+    └── skills/                      ← (.claude/skills → ../.agents/skills symlink)
+        ├── onboard/   audit/   level-up/   grill-with-context/
+        ├── retro/     handoff/   skill-creator/
+        └── docx/      pdf/       pptx/
 ```
 
-See `EXPANSIONS.md` for what to add as you grow.
+See `ROADMAP.md` for what to add as you grow.
+
+---
+
+## Why this exists
+
+I built this while running several parts of my life in parallel, and I got tired of re-explaining who I am and what I'm working on to an AI at the start of every session. I'm sharing it so you don't have to start from scratch. Used with the right intentions, AI is a genuine force multiplier — better decisions, clearer thinking, more intentional work, not just faster output. The structure here reflects what have become industry best practices for AI agent systems as of mid-2026. Special thanks to Nate Herk, whose AIS-OS starter kit provided the original scaffold and a good deal of the thinking this fork builds on.
 
 ---
 

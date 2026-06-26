@@ -7,7 +7,7 @@ description: Use on Day 1 of an AIOS install, when someone says "set me up", "on
 
 Single combined wizard. Reads or writes `aios-intake.md` (the canonical intake), conducts the interview if the file is not filled, then scaffolds the Day-1 file set at the end of the run.
 
-This skill is designed for the **three-bucket model**: personal-family, day-job, and business-hobby. It creates context at the right level — cross-domain information (voice, preferences) at root, domain-specific information inside each bucket's `context/` folder. It also handles the companion setup files: `SOUL.md` prompts, `SESSION_LOG.md` initialization, and `AGENTS.md` symlinks.
+This skill is designed for the **three-bucket model**: personal-family, day-job, and business-hobby. It creates context at the right level — cross-domain information (voice, preferences) at root, domain-specific information inside each bucket's `context/` folder. It also handles the companion setup files: `SOUL.md` prompts, `journal.md` initialization, and `AGENTS.md` symlinks.
 
 ## When NOT to run this
 
@@ -111,7 +111,7 @@ Once the intake is complete, generate or update the following files. If files al
 
 4. **`CLAUDE.md`** — Fill all `{{...}}` placeholders. Include: user's name and identity summary (Q1), domain list with one-line descriptions mapped to buckets, current top priorities (Q3) labeled by bucket, voice register summary (from Q2 samples — describe the register, do not paste full samples here), and a connections summary pointing to `connections.md`.
 
-5. **`SESSION_LOG.md`** — If not already present, initialize with the header format from the template. Do not overwrite if it already has entries.
+5. **`journal.md`** — If not already present, initialize with the header format from the template. Do not overwrite if it already has entries.
 
 6. **`SOUL.md`** — If not already filled (still contains `[bracketed placeholders]`), prompt the user to fill it in after onboarding. Note in the closing screen: "SOUL.md is your global persona — fill it in before your next session."
 

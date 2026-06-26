@@ -29,7 +29,7 @@ Read from the **current working directory** first; fall back to root if the file
 - `context/about-me.md` (or `context/about-[bucket].md`) — top_pain, role in this domain
 - `connections.md` — what's reachable and by what mechanism
 - `references/3ms-framework.md` — the Three Ms framework (quote principles back when relevant)
-- `decisions/log.md` — recent decisions; what's already shipped or in flight
+- `decisions.md` — recent decisions; what's already shipped or in flight
 - `.agents/skills/*/SKILL.md` frontmatter — what capabilities already exist
 - Recent `audits/audit-{date}.md` if present
 
@@ -61,7 +61,7 @@ User picks one candidate. Walk the 5-step Method pipeline:
 **Step 1 — Find the constraint.** Which bottleneck does this solve, or which growth lever does it open? Tie back to Phase 1 answers.
 
 **Step 2 — EAD: Eliminate / Automate / Delegate.**
-- **Eliminate first:** *"What happens if we just stop doing this?"* If the answer is "nothing breaks" → skill exits cheerfully. *"Don't automate waste."* This is a win — log to `decisions/log.md` and stop.
+- **Eliminate first:** *"What happens if we just stop doing this?"* If the answer is "nothing breaks" → skill exits cheerfully. *"Don't automate waste."* This is a win — log to `decisions.md` and stop.
 - **Automate second:** apply 60/30/10 framing. ~60% deterministic, ~30% AI-assisted, ~10% manual.
 - **Delegate third:** if too complex/variable/judgment-heavy → suggest a person. Skill exits with a delegation suggestion, log it.
 
@@ -93,7 +93,7 @@ If the user can't articulate any of the five: *"If you can't explain it to a per
 
 Plus a specific metric (response time, error rate, conversion rate, time-to-completion). **If the user can't name a lever and a metric, skill stops.** *"If your automation doesn't move a number, why are you building it?"*
 
-**Output of Phase 2:** scoped automation spec written to `decisions/log.md` as a dated entry with all five answers + autonomy level + metric. Durable record of what was decided and why.
+**Output of Phase 2:** scoped automation spec written to `decisions.md` as a dated entry with all five answers + autonomy level + metric. Durable record of what was decided and why.
 
 ### Phase 3 — Machine handoff (build it)
 
@@ -130,7 +130,7 @@ Surface the Machine principles when scaffolding:
 
 Every `/level-up` run produces:
 
-1. **One `decisions/log.md` entry** — dated, with the Method spec
+1. **One `decisions.md` entry** — dated, with the Method spec
 2. **One scaffolded artifact** — prompt, skill, or agent file
 3. **A one-screen close** — what was scoped, what was built, and the Bike Method Phase 1 reminder
 
@@ -143,7 +143,7 @@ Every `/level-up` run produces:
 5. **Boring-is-Beautiful default in Machine handoff.** Default = highest non-AI option.
 6. **Tie-to-metric is mandatory.** If user can't name a lever + metric, skill stops.
 7. **Bike Method ships into every artifact.** `bike-method-phase: 1` in frontmatter.
-8. **Read-only on user files except `decisions/log.md` and the new artifact.** Don't modify other existing files.
+8. **Read-only on user files except `decisions.md` and the new artifact.** Don't modify other existing files.
 9. **Bucket-aware reads.** Read context from the active working directory first; fall back to root.
 
 ## Verification
