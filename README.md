@@ -1,109 +1,113 @@
-# AIOS — AI Operating System starter kit for Claude Code
+# AIOS: Personal AI Operating System
 
-A free, MIT-licensed starter kit that turns Claude Code into your personal **AI Operating System (AIOS)**. Designed for anyone running multiple life domains in parallel — professionals, operators, founders, creators — who want their AI to know who they are, what matters, and how they work across all of it.
-
-The kit personalizes itself to you via `/onboard`, then gives you three recurring skills (`/audit`, `/level-up`, `/grill-with-context`) to keep building leverage week over week.
+A structured starter kit for building a personal AI Operating System on top of your chosen AI harness. Designed for knowledge workers running multiple life domains in parallel: professionals, founders, creators, and anyone managing a complex life who wants their AI to know who they are, what matters, and how they work across all of it.
 
 ---
 
-## The litmus test
+## The goal
 
 > **"While you're not at your desk, your AIOS observes one real-world event and produces an output that's faster and more accurate than what you'd produce yourself."**
 
-Every design decision in this kit rolls up to that test. If a layer, skill, or template doesn't contribute to it, it doesn't ship.
+Every design decision in this kit rolls up to that test. If a layer, skill, or template does not contribute to it, it does not ship.
 
 ---
 
 ## How you'll know it's working
 
-Three felt **success indicators** tell you the AIOS is actually changing how you work. Not KPIs — there's no objective metric. These are lived experiences that show up in your week.
+Three felt success indicators tell you the AIOS is actually changing how you work.
 
-**1. Team-reaches-out:**
+**1. Team-reaches-out**
 
-> *"A teammate messages you with a question. You realize your AIOS would answer it better, faster, and with exact sources — even if you were awake and free. So you ask your AIOS too. That's the moment you stop being a bottleneck for your own knowledge."*
+> *"A teammate messages you with a question. You realize your AIOS would answer it better, faster, and with exact sources, even if you were awake and free. So you ask your AIOS too. That's the moment you stop being a bottleneck for your own knowledge."*
 
-**2. Context-switching reduction:**
+**2. Mental load drops**
 
-> *"You stop opening new tabs. You stop launching the desktop app. When something new lands, your first move is to ask the AIOS, not to open six things. The default surface for thought work shifts. Silent. Compounding."*
+> *"You stop rehearsing facts, decisions, and context in your head. You stop trying to remember what was decided last quarter, what someone told you in that meeting, what the right answer is to a question you have answered before. You trust the retrieval. The AIOS holds the truth; you hold the questions."*
 
-**3. Knowledge-leaves-your-head:**
+**3. The default surface shifts**
 
-> *"You stop trying to remember business facts. You don't rehearse what you decided last quarter or what your customer said in that meeting. You trust the retrieval. The AIOS holds the truth, you hold the questions."*
+> *"You stop opening new tabs. When something lands, your first move is to ask the AIOS, not to launch six things. Thought work consolidates. The compound effect is quiet and steady."*
 
-**Personal foundation → company AI-readiness.** Once these indicators show up for one person, the same data architecture powers everything else. Custom dashboards on the data you already collect. Automations on top of the connections you already wired. Team rollout where everyone has theirs. *A company where every operator runs a personal AIOS is a company that's actually AI-ready.*
+**The bigger picture.** As the system matures toward the agent layer, it begins handling recurring tasks in the background, surfacing the right information at the right moment, drafting things you would otherwise write from scratch, and keeping track of what matters so you do not have to. The result is not just faster output. It is a reduction in the mental overhead of managing a complex life, and more time and attention for the things that actually require you.
 
-The kit teaches personal AIOS first. Everything scales from there.
+For people who already use a personal knowledge management or second brain system, an AIOS integrates naturally as the action layer on top of that captured knowledge. The two are complementary: one stores, the other acts.
 
----
-
-## Two frameworks
-
-The kit teaches two complementary frameworks. **Three Ms first, Four Cs second.** Without the brain rewire, the architecture is just a folder structure.
-
-### The Three Ms — operator brain (how you think)
-
-| M | One-liner |
-|---|---|
-| **Mindset** | Default Shift, Function Breakdown, Curiosity Rule. *To what extent can AI be leveraged here?* |
-| **Method** | Find Constraint → EAD (Eliminate, Automate, Delegate) → Map Process → Pick Autonomy Level → Tie to KPI. |
-| **Machine** | Lego Principle, Validation Chain, Bike Method, Intern Rule, Kill Switch. *Boring is beautiful. Workflows beat agents.* |
-
-Full breakdown in `references/3ms-framework.md`. The `/level-up` skill walks you through all three weekly.
-
-### The Four Cs — architecture (what you build)
-
-| # | Layer | One-liner | "This layer is in place" test |
-|---|---|---|---|
-| 1 | **Context** | Knows your life and work | Fresh Claude session answers "what does this person do and what matters to them?" without browsing |
-| 2 | **Connections** | Reaches your stuff | "What's on my calendar tomorrow and what tasks are due?" → live data, no paste |
-| 3 | **Capabilities** | Knows how to do the work | A short phrase triggers a multi-step workflow that produces an artifact |
-| 4 | **Cadence** | Runs without being asked | Laptop closed. A brief lands in the inbox. A teammate messages it and gets a real answer |
-
-**Brand line:** Context. Connections. Capabilities. Cadence.
-
-Dependency graph: Context is non-skippable. Connections + Capabilities can build in parallel. Cadence is last — don't automate workflows that don't work manually.
+**From personal to organizational.** Once these indicators show up for one person, the same architecture powers everything else: custom workflows on the data already collected, automations on the connections already wired. A team where each person runs a personal AIOS is a team that is genuinely AI-ready. Team features are on the roadmap; aios-starter is currently single-user.
 
 ---
 
-## Three-bucket architecture
+## The Five Cs architecture
 
-Life doesn't run in a single context. This kit is structured around three parallel life domains — each with its own scoped context and brainstorm space, all sharing a common skills layer and global persona.
+The system is organized around five layers, each building on the previous one.
 
-| Bucket | Default scope |
-|--------|--------------|
-| `personal-family/` | Life admin, finances, health, relationships, housing, travel |
-| `day-job/` | Primary employment — role, employer, projects, obligations |
-| `business-hobby/` | Independent ventures, side projects, creative work |
-
-Claude Code loads context hierarchically: working from the bucket folder loads that bucket's context plus the root. Working from the root loads only the root. Cross-bucket context is always explicit — via `@include`, a skill, or direct instruction. Never automatic.
-
----
-
-## What ships — skills
-
-The kit ships four recurring AIOS skills — ideation prompts and thinking tools, not heavy automations — plus a set of bundled utility skills. You hack on top of the structure.
-
-| Skill | Type | When to run |
+| Layer | The question it answers | In place when |
 |---|---|---|
-| `/onboard` | Setup wizard (one-time) | Day 1, immediately after clone. Interview + scaffold. Generates Day-1 file set. |
-| `/grill-with-context` | Adversarial pre-flight | Before any significant plan or decision. Stress-tests assumptions before you commit. |
-| `/audit` | Recurring thinking skill | Day 7, then weekly. Four-Cs gap report. Read-only. Watch the score climb. |
-| `/level-up` | Recurring thinking skill | Day 14, then weekly. Three Ms interview. One run = one shipped artifact. |
+| **Context** | Does it know you: your domains, voice, priorities, people? | A fresh session answers "what does this person do and what matters to them?" without re-briefing |
+| **Connections** | Can it reach your actual tools and data? | "What's on my calendar tomorrow and what tasks are due?" returns live data, no paste required |
+| **Capabilities** | Does it know how to do useful work for you specifically? | A short phrase triggers a multi-step workflow that produces the right output |
+| **Cadence** | Does it run consistently without being pushed? | Regular patterns are running: weekly reviews, session captures, recurring checks |
+| **Continuity** | Is it learning and improving over time? | Behavioral corrections accumulate; context stays fresh; the system gets better with use |
 
-**Bundled utility skills:** `retro` and `handoff` (session continuity), `skill-creator` (build/optimize skills), and `docx` / `pdf` / `pptx` (document generation).
+**Dependency:** Context is the foundation. Connections and Capabilities build in parallel. Cadence and Continuity come last. Do not automate what does not work manually, and do not try to improve a system that is not being used.
 
-`/audit` asks *"is the AIOS built right?"* (form). `/level-up` asks *"what leverage am I missing?"* (function). They work in series — fix structure first, then capability planning becomes meaningful.
+---
+
+## Bucket architecture
+
+Life does not run in a single context. This kit organizes your work around 2 to 4 parallel life domains, each with its own scoped context, each sharing a common skills layer and global persona.
+
+Most people start with three buckets:
+
+| Bucket | Typical scope |
+|--------|--------------|
+| personal | Life admin, finances, health, relationships, housing |
+| career | Primary employment, consulting, or client work |
+| venture | Independent projects, side business, or creative work |
+
+Two buckets work for simpler setups. Four work for genuinely distinct domains. You name them during `/onboard`; the examples above are a starting point.
+
+Context loads hierarchically: working from a bucket folder loads that bucket plus the root. Working from the root loads only the root. Cross-bucket context is always explicit. Never automatic.
+
+---
+
+## What ships
+
+**Setup and growth skills:**
+
+| Skill | When to run |
+|---|---|
+| `/onboard` | Day 1, immediately after clone. Intake interview, Day-1 file scaffold, and SOUL.md setup. Budget 15 to 20 minutes. |
+| `/audit` | Monthly. Scores your system against the Five Cs. Surfaces the top gaps to close. |
+| `/level-up` | Weekly. Find one friction, scope one fix, build one thing. |
+| `/reflect` | Quarterly. Synthesizes audit history and patterns into one strategic recommendation. |
+
+**Session continuity:** `retro` captures learnings and checkpoints `journal.md` at the end of each session. `handoff` produces a clean summary before clearing context.
+
+**Thinking:** `grill-with-context` stress-tests a plan or decision before you commit to it.
+
+**Build skills:** `skill-creator` builds new skills with a full test-and-eval loop. `skill-refine` makes targeted fixes to installed skills that are misfiring or producing wrong output.
+
+**Document production:** `docx`, `pdf`, and `pptx` for Word, PDF, and PowerPoint tasks.
+
+See `HANDBOOK.md` for the complete skill inventory with descriptions and trigger guidance.
 
 ---
 
 ## Quick start
 
-1. **Clone the repo** to a working folder on your machine.
-2. **Open it in Claude Code** and run `/onboard`. Answer the questions honestly. Voice samples must be pasted, not described. Takes ~15 minutes. Day-1 file set drops at the end.
-3. **Use it for a week.** Bring real questions. Make real decisions. Log them by appending to `decisions.md`.
-4. **Day 7:** run `/audit`. Read the Four-Cs gap report. Pick one gap to close.
-5. **Day 14:** run `/level-up`. The Three Ms interview surfaces one automation worth building. Build it.
-6. **Week 3+:** weekly `/level-up` ritual. One shipped artifact per week.
+1. Clone the repo to a working folder on your machine. If you work across multiple devices, consider placing your AIOS folder in Dropbox or a similar sync service before running setup; this keeps your files current everywhere.
+
+2. Open your AIOS folder in your AI harness (Claude Code, Codex, or similar) and run `/onboard`. Answer the questions honestly. Voice samples must be pasted from real prior writing, not typed fresh. Budget 15 to 20 minutes. Your Day-1 file set and SOUL.md drop at the end.
+
+3. Use it for a week with real work. Bring real questions. Log decisions by appending to `decisions.md`.
+
+4. Day 7: run `/audit`. Read the Five-Cs gap report. Pick one gap to close.
+
+5. Day 14: run `/level-up`. Find one recurring friction and build something that handles it.
+
+6. Week 3 and beyond: weekly `/level-up`, monthly `/audit`, quarterly `/reflect`. Each pass makes the system more accurate and more autonomous.
+
+The compounding is real but gradual. The system is most useful around week 4 to 6, when enough context, corrections, and decisions have accumulated to meaningfully shape its behavior.
 
 ---
 
@@ -112,52 +116,57 @@ The kit ships four recurring AIOS skills — ideation prompts and thinking tools
 ```
 AIOS/
 ├── README.md
-├── CLAUDE.md                        ← Root operating manual (loaded in every session)
-├── AGENTS.md → CLAUDE.md            ← Symlink for cross-harness parity
-├── SOUL.md                          ← Global persona (fill once, loaded always)
-├── HANDBOOK.md                      ← How the system works: folders, conventions, workflows, skills
-├── ROADMAP.md                       ← What to add as you grow, and when
+├── CLAUDE.md                        <- Root operating manual (loaded every session)
+├── AGENTS.md -> CLAUDE.md           <- Symlink for cross-harness parity
+├── SOUL.md                          <- Global persona (set up during onboard, loaded always)
+├── HANDBOOK.md                      <- Reference manual: folders, conventions, skills
+├── ROADMAP.md                       <- What to add as you grow, and when
 ├── LICENSE
 ├── .gitignore
-├── journal.md                       ← Session diary; cross-bucket summary per session
-├── decisions.md                     ← Append-only record of what was decided and why
-├── connections.md                   ← Registry of every system your AIOS can reach
-├── aios-intake.md                   ← Source-of-truth for /onboard. Edit + re-run any time.
-├── context/                         ← Cross-bucket static facts: voice samples, global preferences
-├── threads/                         ← Cross-bucket topic captures (one file per topic)
-├── artifacts/                       ← Cross-bucket outputs the system made
-├── references/                      ← Inputs brought in from outside
-│   └── 3ms-framework.md             ← The operator brain (Three Ms framework)
-├── learnings/                       ← Persistent behavioral corrections (root-level only)
-├── archives/                        ← Retired content. Move here; don't delete.
-├── personal-family/                 ← Life admin, finances, health, relationships
-│   ├── context/  threads/  workstreams/  artifacts/  references/
-│   └── journal.md  decisions.md     ← (+ CLAUDE.md & AGENTS.md only when needed)
-├── day-job/                         ← Primary employment
-│   ├── context/  threads/  workstreams/  artifacts/  references/
-│   └── journal.md  decisions.md
-├── business-hobby/                  ← Independent ventures, side projects
-│   ├── context/  threads/  workstreams/  artifacts/  references/
-│   └── journal.md  decisions.md
+├── journal.md                       <- Session diary
+├── decisions.md                     <- Append-only decisions log
+├── connections.md                   <- Registry of every tool your AIOS can reach
+├── aios-intake.md                   <- Source of truth for /onboard
+├── context/                         <- Cross-bucket static facts: voice, preferences
+├── threads/                         <- Cross-bucket topic captures
+├── artifacts/                       <- Cross-bucket outputs the system made
+├── references/                      <- Inputs brought in from outside
+├── learnings/                       <- Persistent behavioral corrections (root only)
+├── archives/                        <- Retired content (root only)
+├── audits/                          <- Saved /audit reports; score history
+├── reflects/                        <- Saved /reflect reports; strategic history
+├── templates/                       <- Reusable prompt templates
+├── personal/                 <- Default bucket 1 (renamed during /onboard)
+|   +-- context/  threads/  workstreams/  artifacts/  references/
+|   +-- journal.md
+├── career/                         <- Default bucket 2 (renamed during /onboard)
+|   +-- (same layout)
+├── venture/                  <- Default bucket 3 (renamed during /onboard)
+|   +-- (same layout)
 └── .agents/
-    └── skills/                      ← (.claude/skills → ../.agents/skills symlink)
-        ├── onboard/   audit/   level-up/   grill-with-context/
-        ├── retro/     handoff/   skill-creator/
-        └── docx/      pdf/       pptx/
+    └── skills/                      <- (.claude/skills symlinks here)
+        ├── onboard/       audit/          level-up/     reflect/
+        ├── grill-with-context/            retro/        handoff/
+        ├── skill-creator/ skill-refine/
+        └── docx/          pdf/            pptx/
 ```
 
-See `ROADMAP.md` for what to add as you grow.
+See `HANDBOOK.md` for the complete folder and file reference. See `ROADMAP.md` for what to add as you grow.
 
 ---
 
 ## Why this exists
 
-I built this while running several parts of my life in parallel, and I got tired of re-explaining who I am and what I'm working on to an AI at the start of every session. I'm sharing it so you don't have to start from scratch. Used with the right intentions, AI is a genuine force multiplier — better decisions, clearer thinking, more intentional work, not just faster output. The structure here reflects what have become industry best practices for AI agent systems as of mid-2026. Special thanks to Nate Herk, whose AIS-OS starter kit provided the original scaffold and a good deal of the thinking this fork builds on.
+This kit was built for people running multiple parts of their lives in parallel who wanted an AI that actually knows them, not one they have to re-brief every session.
+
+The structure here reflects recognizable best practices for personal AI agent systems as of mid-2026. It is shared as a starting point so you do not have to build from scratch.
+
+*With appreciation to Nate Herk, whose AIOS starter kit provided the original scaffold and foundational thinking this project builds on.*
 
 ---
 
-## License + attribution
+## License
 
-MIT License. Copyright (c) 2026 Joshua Sahib.
+This project is licensed under Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0). You may use, adapt, and share it for personal and non-commercial purposes with attribution. Commercial use requires a separate arrangement.
 
-This project was inspired by and adapted from a personal AIOS starter kit originally created by Nate Herk, which introduced the Four Cs of an AIOS and the Three Ms of AI™ as its conceptual foundation. This fork has been substantially reworked for a multi-domain, three-bucket use case. The Three Ms of AI™ is a trademark of Nate Herk; the framework is included in `references/3ms-framework.md` with full attribution.
+See `LICENSE` for the full license text.

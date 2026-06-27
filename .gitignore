@@ -5,7 +5,8 @@
 __pycache__/
 node_modules/
 .claude/settings.local.json
-audits/
+audits/*.md
+!audits/.gitkeep
 
 # IDE — user-specific, not for repo
 .vscode/

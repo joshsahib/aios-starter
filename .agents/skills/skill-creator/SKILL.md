@@ -492,5 +492,6 @@ When running inside this AIOS:
 
 - **Skills live in `.agents/skills/`** at the AIOS root (`.claude/skills` is a symlink to the same place). Place new skills there regardless of which bucket you're working in.
 - **Workspace placement**: put `<skill-name>-workspace/` as a sibling to the skill directory inside `.agents/skills/`
-- **After creating or significantly revising a skill**: add or update a row in the skills table in the root `CLAUDE.md` (the one at the AIOS root, not a bucket-level file)
+- **After creating or significantly revising a skill**: update the skills table in `HANDBOOK.md` — that is the single source of truth for the skill inventory. Do not modify `CLAUDE.md` for skill changes.
 - **Model**: check your system prompt for the current model ID and use it as the `--model` argument in `scripts/run_loop.py`
+- **Targeted fixes for installed skills**: if the user knows exactly what's wrong (wrong trigger, output quality, or narrow scope drift), `/skill-refine` is faster. Route there rather than running a full eval loop on a known problem.

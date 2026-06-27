@@ -1,1 +1,0 @@
-# Business & Hobby Journal
